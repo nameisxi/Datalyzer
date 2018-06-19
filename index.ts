@@ -1,4 +1,4 @@
-function drawStructure(content, parentElement) {
+/*function drawStructure(content, parentElement) {
     for (item in content) {
         let subItems = content[item][1];
         let key = content[item][0]
@@ -22,9 +22,9 @@ function drawStructure(content, parentElement) {
     }
 
     return parentElement;
-}
+}*/
 
-function drawFirstElement(content, parentElement) {
+/*function drawFirstElement(content, parentElement) {
     for (item in content) {
         let subItems = content[item][1];
         let key = content[item][0]
@@ -48,9 +48,9 @@ function drawFirstElement(content, parentElement) {
     }
 
     return parentElement;
-}
+}*/
 
-function analyze(jsonFileParsed) {
+/*function analyze(jsonFileParsed) {
     const file = jsonFileParsed;
     const keys = Object.keys(file);
     const firstItem = file[keys[0]];
@@ -60,17 +60,17 @@ function analyze(jsonFileParsed) {
     //draw(content, false);
 
     return content;
-}
+}*/
 
-function analyzeAllData(jsonFileParsed, keys) {
+/*function analyzeAllData(jsonFileParsed, keys) {
     const content = [];
     for (key in keys) {
         content.push(getJSONContent(jsonFileParsed[key], false, false));
     }
     console.log(content);
-}
+}*/
 
-function getJSONContent(items, recursion, returnKeyValuePair) {
+/*function getJSONContent(items, recursion, returnKeyValuePair) {
     let content = [];
     for (key in items) {
         let keyValuePair = [];
@@ -113,7 +113,7 @@ function getJSONContent(items, recursion, returnKeyValuePair) {
     }
 
     return content;
-}
+}*/
 
 function readFile() {
     const file = document.getElementById("fileInputField").files[0];
