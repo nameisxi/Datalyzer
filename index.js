@@ -1,14 +1,27 @@
-/*function drawStructure(content, parentElement) {
+/*
+TODO:
+    -When new file is uploaded, clear the html page from old file
+    -Get the first element as a whole e.g. test datasets "Description: {},"
+    -CSV support
+    -Refactoring
+    -Styling
+*/
+
+function drawJSONStructure(content, parentElement) {
     for (item in content) {
         let subItems = content[item][1];
         let key = content[item][0]
+        console.log("key: ", key);
 
         if (typeof(subItems) === "object" && subItems.length > 1) {
-            console.log("sub items toimii: ", subItems);
             let ul = document.createElement("ul");
-            ul = drawStructure(subItems, ul);
-            //let br = document.createElement("br");
-            //parentElement.appendChild(br);
+            ul = drawJSONStructure(subItems, ul);
+
+            let li = document.createElement("li");
+            let value = document.createTextNode(key + ": ");
+            li.appendChild(value);
+
+            parentElement.appendChild(li);
             parentElement.appendChild(ul);
             continue;
         }
@@ -22,19 +35,23 @@
     }
 
     return parentElement;
-}*/
+}
 
-/*function drawFirstElement(content, parentElement) {
+function drawFirstJSONElement(content, parentElement) {
     for (item in content) {
         let subItems = content[item][1];
         let key = content[item][0]
+        console.log("key: ", key);
 
         if (typeof(subItems) === "object" && subItems.length > 1) {
-            console.log("sub items toimii: ", subItems);
             let ul = document.createElement("ul");
-            ul = drawStructure(subItems, ul);
-            //let br = document.createElement("br");
-            //parentElement.appendChild(br);
+            ul = drawFirstJSONElement(subItems, ul);
+
+            let li = document.createElement("li");
+            let value = document.createTextNode(key + ": ");
+            li.appendChild(value);
+
+            parentElement.appendChild(li);
             parentElement.appendChild(ul);
             continue;
         }
@@ -48,9 +65,9 @@
     }
 
     return parentElement;
-}*/
+}
 
-/*function analyze(jsonFileParsed) {
+function analyze(jsonFileParsed) {
     const file = jsonFileParsed;
     const keys = Object.keys(file);
     const firstItem = file[keys[0]];
@@ -60,17 +77,17 @@
     //draw(content, false);
 
     return content;
-}*/
+}
 
-/*function analyzeAllData(jsonFileParsed, keys) {
+function analyzeAllData(jsonFileParsed, keys) {
     const content = [];
     for (key in keys) {
         content.push(getJSONContent(jsonFileParsed[key], false, false));
     }
     console.log(content);
-}*/
+}
 
-/*function getJSONContent(items, recursion, returnKeyValuePair) {
+function getJSONContent(items, recursion, returnKeyValuePair) {
     let content = [];
     for (key in items) {
         let keyValuePair = [];
@@ -113,7 +130,7 @@
     }
 
     return content;
-}*/
+}
 
 function readFile() {
     const file = document.getElementById("fileInputField").files[0];
@@ -156,7 +173,7 @@ function readFile() {
 
             let ul = document.createElement("ul");
             let div = document.createElement("div");
-            let visualizedJSON = drawStructure(content, ul);
+            let visualizedJSON = drawJSONStructure(content, ul);
             div.appendChild(visualizedJSON);
             document.body.appendChild(div);
         } catch (error) {
@@ -173,7 +190,7 @@ function readFile() {
 
             let ul = document.createElement("ul");
             let div = document.createElement("div");
-            let visualizedJSON = drawFirstElement(content, ul);
+            let visualizedJSON = drawFirstJSONElement(content, ul);
             div.appendChild(visualizedJSON);
             document.body.appendChild(div);
         } catch (error) {
