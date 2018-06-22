@@ -1,8 +1,22 @@
 class Parser {
     constructor() {
-
+        this.errorHandler = new ErrorHandler();
+        this.analyzer = new Analyzer();
     }
-    
+
+    parseJSONFile(file) {
+        try {
+            let jsonFileParsed = JSON.parse(file);
+            return jsonFileParsed;
+        } catch (error) {
+            this.errorHandler.fileParsingError();
+        }
+    }
+
+    parseCSVFile() {
+        return null;
+    }
+
     getJSONContent(items, recursion, returnKeyValuePair) {
         let content = [];
         for (key in items) {
@@ -46,5 +60,9 @@ class Parser {
         }
     
         return content;
+    }
+
+    getCSVContent() {
+        return null;
     }
 }

@@ -6,9 +6,72 @@ TODO:
     -CSV support
     -Refactoring
     -Styling
+    -code editor that enables turning text to file
+    -data validator
 */
 
-function drawJSONStructure(content, parentElement) {
+
+/**
+ * Analyzes the file that was uploaded through the input field.
+ */
+function analyze() {
+    clearPage();
+
+    const file = document.getElementById("fileInputField").files[0];
+
+    let errorHandler = new ErrorHandler;
+    let validator = new Validator();
+    const fileExtension = validator.checkFileExtension(file);
+    const dataIsValid = validator.checkDataValidity(file);
+
+    let reader = new Reader();
+    if (dataIsValid) {
+        if (fileExtension === ".json") {
+            reader.readJSONFile(file);
+        } else if (fileExtension === ".csv") {
+            reader.readCSVFile(file);
+        }
+    } else {
+        errorHandler.dataIsNotValid();
+        return;
+    }
+    
+}
+
+
+/**
+ * Clears the HTML page from old divs, like errorDivs that are used to store and display error messages to user.
+ */
+function clearPage() {
+    const jsonStructureDiv = document.getElementById("JSONStructure");
+    const jsonFirstElementDiv = document.getElementById("JSONFirstElement");
+    let errorDivs = document.getElementsByClassName("errorDiv");
+    
+    if (jsonStructureDiv) {
+        document.body.removeChild(jsonStructureDiv);
+    }
+
+    if (jsonFirstElementDiv) {
+        document.body.removeChild(jsonFirstElementDiv);
+    }
+
+    while (errorDivs[0]) {
+        errorDivs[0].parentNode.removeChild(errorDivs[0]);
+    }    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/*function drawJSONStructure(content, parentElement) {
     for (item in content) {
         let subItems = content[item][1];
         let key = content[item][0]
@@ -137,6 +200,7 @@ function getJSONContent(items, recursion, returnKeyValuePair) {
 function readFile() {
     const jsonStructureDiv = document.getElementById("JSONStructure");
     const jsonFirstElementDiv = document.getElementById("JSONFirstElement");
+    let errorDivs = document.getElementsByClassName("errorDiv");
     
     if (jsonStructureDiv) {
         document.body.removeChild(jsonStructureDiv);
@@ -144,6 +208,10 @@ function readFile() {
 
     if (jsonFirstElementDiv) {
         document.body.removeChild(jsonFirstElementDiv);
+    }
+
+    while (errorDivs[0]) {
+        errorDivs[0].parentNode.removeChild(errorDivs[0]);
     }
 
     const file = document.getElementById("fileInputField").files[0];
@@ -161,21 +229,37 @@ function readFile() {
         }
 
         reader.onerror = (event) => {
+            let div = document.createElement("div");
+            div.setAttribute("class", "errorDiv");
+
             let errorMessage = document.createElement("fileReadingError");
             errorMessage.textContent = "File read was unsuccessful";
-            reject(document.body.appendChild(errorMessage));
+
+            div.appendChild(errorMessage);
+            reject(div);
         }
     });
 
-    promise.then((result) => {
+    promise.then((jsonFile) => parse(jsonFile));
+
+    promise.then((jsonFile) => {
         try {
-            jsonFileParsed = JSON.parse(result);
+            parse(jsonFile);
+            console.log("jsonfile: ", jsonFile);
+            jsonFileParsed = JSON.parse(jsonFile);
             content = analyze(jsonFileParsed);
             console.log(content);
         } catch (error) {
+            console.log("outoa");
+            let div = document.createElement("div");
+            div.setAttribute("class", "errorDiv");
+
             let errorMessage = document.createElement("fileParsingError");
             errorMessage.textContent = "File processing was unsuccessful due to an error encountered in it";
-            document.body.appendChild(errorMessage);
+
+            div.appendChild(errorMessage);
+            div.appendChild(document.createElement("br"));
+            document.body.appendChild(div);
         }
     }).then(() => {
         try {
@@ -202,9 +286,15 @@ function readFile() {
             div.appendChild(valueDiv);
             document.body.appendChild(div);
         } catch (error) {
+            let div = document.createElement("div");
+            div.setAttribute("class", "errorDiv");
+
             let errorMessage = document.createElement("contentDrawingError");
             errorMessage.textContent = "Content drawing was unsuccessful due to an error";
-            document.body.appendChild(errorMessage);
+
+            div.appendChild(errorMessage);
+            div.appendChild(document.createElement("br"));
+            document.body.appendChild(div);
         }
     }).then(() => {
         try {
@@ -231,9 +321,115 @@ function readFile() {
             div.appendChild(valueDiv);
             document.body.appendChild(div);
         } catch (error) {
+            let div = document.createElement("div");
+            div.setAttribute("class", "errorDiv");
+
             let errorMessage = document.createElement("contentDrawingError");
             errorMessage.textContent = "Content drawing was unsuccessful due to an error";
-            document.body.appendChild(errorMessage);
+
+            div.appendChild(errorMessage);
+            div.appendChild(document.createElement("br"));
+            document.body.appendChild(div);
         }
     });
 }
+
+function parse(jsonFile) {
+    console.log("parse toimii");
+    try {
+        console.log("parse toimii edelleen");
+        console.log("jsonfile: ", jsonFile);
+        jsonFileParsed = JSON.parse(jsonFile);
+        content = analyze(jsonFileParsed);
+        console.log(content);
+
+        drawS(content);
+        drawE(content);
+
+    } catch (error) {
+        console.log("parse ei toimi enaa: ", error);
+        let div = document.createElement("div");
+        div.setAttribute("class", "errorDiv");
+
+        let errorMessage = document.createElement("fileParsingError");
+        errorMessage.textContent = "File processing was unsuccessful due to an error encountered in it";
+
+        div.appendChild(errorMessage);
+        div.appendChild(document.createElement("br"));
+        document.body.appendChild(div);
+    }    
+}
+
+function drawS(content) {
+    try {
+        let div = document.createElement("div");
+        div.setAttribute("id", "JSONStructure");
+
+        let h3 = document.createElement("h3");
+        let h3Value = document.createTextNode("JSON file's structure: ");
+        h3.appendChild(h3Value);
+        div.appendChild(h3);
+
+        let ul = document.createElement("ul");
+        let valueUl = document.createElement("ul");
+        let valueDiv = document.createElement("div");
+        valueDiv.setAttribute("id", "JSONStructureValue");
+
+        let visualizedJSON = drawJSONStructure(content[1], valueUl);
+        let li = document.createElement("li");
+        let liValue = document.createTextNode(content[0] + ": ");
+
+        li.appendChild(liValue);
+        valueDiv.appendChild(li);
+        valueDiv.appendChild(visualizedJSON);
+        div.appendChild(valueDiv);
+        document.body.appendChild(div);
+    } catch (error) {
+        let div = document.createElement("div");
+        div.setAttribute("class", "errorDiv");
+
+        let errorMessage = document.createElement("contentDrawingError");
+        errorMessage.textContent = "Content drawing was unsuccessful due to an error";
+
+        div.appendChild(errorMessage);
+        div.appendChild(document.createElement("br"));
+        document.body.appendChild(div);
+    }
+}
+
+function drawE(content) {
+    try {
+        let div = document.createElement("div");
+        div.setAttribute("id", "JSONFirstElement");
+
+        let h3 = document.createElement("h3");
+        let h3Value = document.createTextNode("JSON file's first element: ");
+        h3.appendChild(h3Value);
+        div.appendChild(h3);
+
+        let ul = document.createElement("ul");
+        let valueUl = document.createElement("ul");
+        let valueDiv = document.createElement("div");
+        valueDiv.setAttribute("id", "JSONFirstElementValue");
+
+        let visualizedJSON = drawFirstJSONElement(content[1], valueUl);
+        let li = document.createElement("li");
+        let liValue = document.createTextNode(content[0] + ": ");
+
+        li.appendChild(liValue);
+        valueDiv.appendChild(li);
+        valueDiv.appendChild(visualizedJSON);
+        div.appendChild(valueDiv);
+        document.body.appendChild(div);
+    } catch (error) {
+        let div = document.createElement("div");
+        div.setAttribute("class", "errorDiv");
+
+        let errorMessage = document.createElement("contentDrawingError");
+        errorMessage.textContent = "Content drawing was unsuccessful due to an error";
+
+        div.appendChild(errorMessage);
+        div.appendChild(document.createElement("br"));
+        document.body.appendChild(div);
+    }
+}*/

@@ -23,3 +23,9 @@
     padding-right: 0.5em;
     padding-left: 0.5em;
 }
+
+.errorDiv {
+    margin-top: 1em;
+    background-color: lightcoral;
+    border: 1px solid red;
+}
