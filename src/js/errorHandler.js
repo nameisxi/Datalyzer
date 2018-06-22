@@ -1,7 +1,7 @@
 /**
  * ErroHandler class handles error message visualizations to the user.
  */
-class ErrorHandler {
+export default class ErrorHandler {
     dataIsNotValid() {
         let div = document.createElement("div");
         div.setAttribute("class", "errorDiv");
@@ -45,6 +45,17 @@ class ErrorHandler {
 
         let errorMessage = document.createElement("fileVisualizationError");
         errorMessage.textContent = "Content visualization was unsuccessful due to an error";
+
+        div.appendChild(errorMessage);
+        div.appendChild(document.createElement("br"));
+        document.body.appendChild(div);
+    }
+
+    testi() {
+        let div = document.createElement("div");
+
+        let errorMessage = document.createElement("testi");
+        errorMessage.textContent = "TOIMIIIIII";
 
         div.appendChild(errorMessage);
         div.appendChild(document.createElement("br"));

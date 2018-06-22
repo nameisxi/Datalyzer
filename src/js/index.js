@@ -1,3 +1,4 @@
+import ErrorHandler from './errorHandler.js';
 /*
 TODO:
     -When new file is uploaded, clear the html page from old file
@@ -10,14 +11,13 @@ TODO:
     -data validator
 */
 
-
 /**
  * Analyzes the file that was uploaded through the input field.
  */
 function analyze() {
     clearPage();
 
-    const file = document.getElementById("fileInputField").files[0];
+    /*const file = document.getElementById("fileInputField").files[0];
 
     let errorHandler = new ErrorHandler;
     let validator = new Validator();
@@ -34,7 +34,7 @@ function analyze() {
     } else {
         errorHandler.dataIsNotValid();
         return;
-    }
+    }*/
     
 }
 
@@ -57,7 +57,10 @@ function clearPage() {
 
     while (errorDivs[0]) {
         errorDivs[0].parentNode.removeChild(errorDivs[0]);
-    }    
+    }
+    
+    let errorHandler = new ErrorHandler();
+    errorHandler.testi();
 }
 
 
