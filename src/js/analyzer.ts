@@ -1,4 +1,9 @@
-class Analyzer {
+import { Parser } from "./parser";
+import { Visualizer } from "./visualizer";
+
+export class Analyzer {
+    parser: Parser;
+    visualizer: Visualizer;
     constructor() {
         this.parser = new Parser();
         this.visualizer = new Visualizer();

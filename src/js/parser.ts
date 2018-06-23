@@ -1,4 +1,9 @@
-class Parser {
+import { ErrorHandler } from "./errorHandler";
+import { Analyzer } from "./analyzer";
+
+export class Parser {
+    errorHandler: ErrorHandler;
+    analyzer: Analyzer;
     constructor() {
         this.errorHandler = new ErrorHandler();
         this.analyzer = new Analyzer();
@@ -19,16 +24,16 @@ class Parser {
 
     getJSONContent(items, recursion, returnKeyValuePair) {
         let content = [];
-        for (key in items) {
+        for (let key in items) {
             let keyValuePair = [];
             let value = items[key];
             keyValuePair.push(key);
     
             if (typeof(value) === "object") {
                 if (value.length > 1) {
-                    value = getJSONContent(value, true, false);
+                    value = this.getJSONContent(value, true, false);
                 } else {
-                    value = getJSONContent(value, true, true);
+                    value = this.getJSONContent(value, true, true);
                 }
                 
                 if (returnKeyValuePair) {

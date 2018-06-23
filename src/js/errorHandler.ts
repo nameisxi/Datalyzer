@@ -1,7 +1,7 @@
 /**
  * ErroHandler class handles error message visualizations to the user.
  */
-export default class ErrorHandler {
+export class ErrorHandler {
     dataIsNotValid() {
         let div = document.createElement("div");
         div.setAttribute("class", "errorDiv");

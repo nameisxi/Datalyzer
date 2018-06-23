@@ -1,4 +1,6 @@
-import ErrorHandler from './errorHandler.js';
+import { ErrorHandler } from './errorHandler.js';
+import { Validator } from './validator.js';
+
 /*
 TODO:
     -When new file is uploaded, clear the html page from old file
@@ -14,59 +16,57 @@ TODO:
 /**
  * Analyzes the file that was uploaded through the input field.
  */
-function analyze() {
-    clearPage();
+class StartUp {
+    errorHandler: ErrorHandler;
+    validator: Validator;
 
-    /*const file = document.getElementById("fileInputField").files[0];
+    constructor() {
+        this.errorHandler = new ErrorHandler();
+        this.validator = new Validator();
+    }
 
-    let errorHandler = new ErrorHandler;
-    let validator = new Validator();
-    const fileExtension = validator.checkFileExtension(file);
-    const dataIsValid = validator.checkDataValidity(file);
+    main() {
+        this.clearPage();
 
-    let reader = new Reader();
-    if (dataIsValid) {
-        if (fileExtension === ".json") {
-            reader.readJSONFile(file);
-        } else if (fileExtension === ".csv") {
-            reader.readCSVFile(file);
+        /*const file = document.getElementById("fileInputField").files[0];
+
+        const fileExtension = this.validator.checkFileExtension(file);
+        const dataIsValid = this.validator.checkDataValidity(file);
+
+        let reader = new Reader();
+        if (dataIsValid) {
+            if (fileExtension === ".json") {
+                reader.readJSONFile(file);
+            } else if (fileExtension === ".csv") {
+                reader.readCSVFile(file);
+            }
+        } else {
+            this.errorHandler.dataIsNotValid();
+            return;
+        }*/
+    
+    }
+
+    clearPage() {
+        const jsonStructureDiv = document.getElementById("JSONStructure");
+        const jsonFirstElementDiv = document.getElementById("JSONFirstElement");
+        let errorDivs = document.getElementsByClassName("errorDiv");
+    
+        if (jsonStructureDiv) {
+            document.body.removeChild(jsonStructureDiv);
         }
-    } else {
-        errorHandler.dataIsNotValid();
-        return;
-    }*/
+
+        if (jsonFirstElementDiv) {
+            document.body.removeChild(jsonFirstElementDiv);
+        }
+
+        while (errorDivs[0]) {
+            errorDivs[0].parentNode.removeChild(errorDivs[0]);
+        }
     
+        this.errorHandler.testi();
+    }
 }
-
-
-/**
- * Clears the HTML page from old divs, like errorDivs that are used to store and display error messages to user.
- */
-function clearPage() {
-    const jsonStructureDiv = document.getElementById("JSONStructure");
-    const jsonFirstElementDiv = document.getElementById("JSONFirstElement");
-    let errorDivs = document.getElementsByClassName("errorDiv");
-    
-    if (jsonStructureDiv) {
-        document.body.removeChild(jsonStructureDiv);
-    }
-
-    if (jsonFirstElementDiv) {
-        document.body.removeChild(jsonFirstElementDiv);
-    }
-
-    while (errorDivs[0]) {
-        errorDivs[0].parentNode.removeChild(errorDivs[0]);
-    }
-    
-    let errorHandler = new ErrorHandler();
-    errorHandler.testi();
-}
-
-
-
-
-
 
 
 
@@ -436,3 +436,8 @@ function drawE(content) {
         document.body.appendChild(div);
     }
 }*/
+
+document.getElementById("fileInputField").addEventListener("change", () => {
+    let startUp = new StartUp();
+    startUp.main();
+});

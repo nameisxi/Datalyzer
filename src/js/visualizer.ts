@@ -1,4 +1,7 @@
-class Visualizer {
+import { ErrorHandler } from "./errorHandler";
+
+export class Visualizer {
+    errorHandler: ErrorHandler;
     constructor() {
         this.errorHandler = new ErrorHandler();
     }
@@ -18,7 +21,7 @@ class Visualizer {
             let valueDiv = document.createElement("div");
             valueDiv.setAttribute("id", "JSONStructureValue");
 
-            let visualizedJSON = drawJSONStructure(content[1], valueUl);
+            let visualizedJSON = this.drawJSONStructure(content[1], valueUl);
             let li = document.createElement("li");
             let liValue = document.createTextNode(content[0] + ": ");
 
@@ -47,7 +50,7 @@ class Visualizer {
             let valueDiv = document.createElement("div");
             valueDiv.setAttribute("id", "JSONFirstElementValue");
 
-            let visualizedJSON = drawFirstJSONElement(content[1], valueUl);
+            let visualizedJSON = this.drawFirstJSONElement(content[1], valueUl);
             let li = document.createElement("li");
             let liValue = document.createTextNode(content[0] + ": ");
 
@@ -86,14 +89,14 @@ class Visualizer {
     }
 
     drawJSONStructure(content, parentElement) {
-        for (item in content) {
+        for (let item in content) {
             let subItems = content[item][1];
             let key = content[item][0]
             console.log("key: ", key);
     
             if (typeof(subItems) === "object" && subItems.length > 1) {
                 let ul = document.createElement("ul");
-                ul = drawJSONStructure(subItems, ul);
+                ul = this.drawJSONStructure(subItems, ul);
     
                 let li = document.createElement("li");
                 let value = document.createTextNode(key + ": ");
@@ -120,14 +123,14 @@ class Visualizer {
     }
 
     drawFirstJSONElement(content, parentElement) {
-        for (item in content) {
+        for (let item in content) {
             let subItems = content[item][1];
             let key = content[item][0]
             console.log("key: ", key);
     
             if (typeof(subItems) === "object" && subItems.length > 1) {
                 let ul = document.createElement("ul");
-                ul = drawFirstJSONElement(subItems, ul);
+                ul = this.drawFirstJSONElement(subItems, ul);
     
                 let li = document.createElement("li");
                 let value = document.createTextNode(key + ": ");

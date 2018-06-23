@@ -1,7 +1,7 @@
 /**
  * Validator class handles different validations regarding file inputs.
  */
-class Validator {
+export class Validator {
     checkFileExtension(file) {
         return ".json";
     }
