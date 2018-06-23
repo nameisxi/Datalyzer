@@ -1,5 +1,5 @@
-import { ErrorHandler } from "./errorHandler";
-import { Analyzer } from "./analyzer";
+import { ErrorHandler } from "./errorHandler.js";
+import { Analyzer } from "./analyzer.js";
 export class Parser {
     constructor() {
         this.errorHandler = new ErrorHandler();

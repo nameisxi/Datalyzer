@@ -1,4 +1,4 @@
-import { ErrorHandler } from "./errorHandler";
+import { ErrorHandler } from "./errorHandler.js";
 export class Visualizer {
     constructor() {
         this.errorHandler = new ErrorHandler();

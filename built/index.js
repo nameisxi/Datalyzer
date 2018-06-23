@@ -1,4 +1,4 @@
-import { ErrorHandler } from './errorHandler';
+import { ErrorHandler } from './errorHandler.js';
 import { Validator } from './validator.js';
 /*
 TODO:

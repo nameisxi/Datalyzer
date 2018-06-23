@@ -1,5 +1,5 @@
-import { Parser } from "./parser";
-import { Visualizer } from "./visualizer";
+import { Parser } from "./parser.js";
+import { Visualizer } from "./visualizer.js";
 export class Analyzer {
     constructor() {
         this.parser = new Parser();

@@ -1,5 +1,5 @@
-import { ErrorHandler } from "./errorHandler";
-import { Analyzer } from "./analyzer";
+import { ErrorHandler } from "./errorHandler.js";
+import { Analyzer } from "./analyzer.js";
 /**
  * Reader class handles file readings.
  */
