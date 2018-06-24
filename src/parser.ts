@@ -1,17 +1,17 @@
-import { ErrorHandler } from "./errorHandler";
-import { Analyzer } from "./analyzer";
+import { ErrorHandler } from "./errorHandler.js";
 
 export class Parser {
     errorHandler: ErrorHandler;
-    analyzer: Analyzer;
+
     constructor() {
         this.errorHandler = new ErrorHandler();
-        this.analyzer = new Analyzer();
     }
 
     parseJSONFile(file) {
+        console.log("parsing json file...");
         try {
             let jsonFileParsed = JSON.parse(file);
+            console.log("json file parsed.");
             return jsonFileParsed;
         } catch (error) {
             this.errorHandler.fileParsingError();

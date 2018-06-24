@@ -1,5 +1,5 @@
-import { ErrorHandler } from "./errorHandler";
-import { Analyzer } from "./analyzer";
+import { ErrorHandler } from "./errorHandler.js";
+import { Analyzer } from "./analyzer.js";
 
 /**
  * Reader class handles file readings.
@@ -7,24 +7,26 @@ import { Analyzer } from "./analyzer";
 export class Reader {
     errorHandler: ErrorHandler;
     analyzer: Analyzer;
+    reader: FileReader;
+    
     constructor() {
         this.errorHandler = new ErrorHandler();
         this.analyzer = new Analyzer();
+        this.reader = new FileReader();
     }
 
     readJSONFile(file) {
+        console.log("JSON reading started...");
         let jsonFile = null;
-        const reader = new FileReader();
 
         let promise = new Promise((resolve, reject) => {
-            reader.readAsText(file, "UTF-8");
-            reader.onload = (event) => {
-                console.log("loading...");
+            this.reader.readAsText(file, "UTF-8");
+            this.reader.onload = (event) => {
                 jsonFile = event.target.result;
                 resolve(jsonFile);
             }
     
-            reader.onerror = (event) => {
+            this.reader.onerror = (event) => {
                 reject(this.errorHandler.fileReadingError());
             }
         });
@@ -33,6 +35,6 @@ export class Reader {
     }
 
     readCSVFile(file) {
-
+        return null;
     }
 }

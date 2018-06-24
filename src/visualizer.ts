@@ -1,7 +1,8 @@
-import { ErrorHandler } from "./errorHandler";
+import { ErrorHandler } from "./errorHandler.js";
 
 export class Visualizer {
     errorHandler: ErrorHandler;
+    
     constructor() {
         this.errorHandler = new ErrorHandler();
     }
@@ -29,7 +30,7 @@ export class Visualizer {
             valueDiv.appendChild(li);
             valueDiv.appendChild(visualizedJSON);
             div.appendChild(valueDiv);
-            document.body.appendChild(div);
+            document.getElementById("container").appendChild(div);
         } catch (error) {
             this.errorHandler.fileVisualizationError();
         }
@@ -58,7 +59,7 @@ export class Visualizer {
             valueDiv.appendChild(li);
             valueDiv.appendChild(visualizedJSON);
             div.appendChild(valueDiv);
-            document.body.appendChild(div);
+            document.getElementById("container").appendChild(div);
         } catch (error) {
             this.errorHandler.fileVisualizationError();
         }

@@ -1,0 +1,52 @@
+/*Input element*/
+#fileInputField[type=file] {
+    display:none;
+    margin:10px;
+}
+
+#fileInputField[type=file] + label {
+    display:inline-block;
+    margin:20px;
+    padding: 4px 32px;
+    background-color: #FFFFFF;
+    border:solid 1px #000000;
+    border-radius: 0px;
+    color:#666F77;
+}
+
+#fileInputField[type=file]:active + label {
+    background-image: none;
+    background-color:#2D6C7A;
+    color:#FFFFFF;
+}
+
+/*File value elements*/
+h3 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 300;
+    color: #FFFFFF;
+    margin-right: 2%;
+    margin-left: 2%;
+}
+
+#JSONStructure, #JSONFirstElement {
+    background-color: #000000;
+    float: left; 
+    margin-top: 3%;
+    margin-left: 3%;
+}
+
+#JSONStructureValue, #JSONFirstElementValue {
+    background-color: #FFFFFF;
+    margin-bottom: 0;
+    padding-top: 1em;
+    padding-right: 2%;
+    padding-left: 2%;
+}
+
+/*Error elements*/
+.errorDiv {
+    margin-top: 1em;
+    background-color: lightcoral;
+    border: 1px solid red;
+}
