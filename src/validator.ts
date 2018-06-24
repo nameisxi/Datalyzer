@@ -3,7 +3,8 @@
  */
 export class Validator {
     getFileExtension(file) {
-        return ".json";
+        const fileExtension = file.name.split('.').pop();
+        return fileExtension;
     }
 
     checkDataValidity(file) {

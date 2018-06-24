@@ -38,12 +38,13 @@ class Main {
         const file: File = files[0];
 
         const fileExtension = this.validator.getFileExtension(file);
+        console.log("extension: ", fileExtension);
         const dataIsValid = this.validator.checkDataValidity(file);
 
         if (dataIsValid) {
-            if (fileExtension === ".json") {
+            if (fileExtension === "json") {
                 this.reader.readJSONFile(file);
-            } else if (fileExtension === ".csv") {
+            } else if (fileExtension === "csv") {
                 this.reader.readCSVFile(file);
             }
         } else {
