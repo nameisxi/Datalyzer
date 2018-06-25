@@ -3,14 +3,12 @@ import { Validator } from './validator.js';
 import { Reader } from './reader.js';
 /*
 TODO:
-    -When new file is uploaded, clear the html page from old file
     -Get content full or first n elements
-    -Additional information regarding single key value pairs etc.
+    -Additional information regarding single key value pairs etc. on click or hover
     -CSV support
-    -Refactoring
-    -Styling
     -code editor that enables turning text to file
     -data validator
+    -migrate to react
 */
 /**
  * Analyzes the file that was uploaded through the input field.

@@ -5,6 +5,8 @@ export class Parser {
     }
     parseJSONFile(file) {
         console.log("parsing json file...");
+        console.log("withouth tag: ", file.innerText);
+        console.log("file: ", file);
         try {
             let jsonFileParsed = JSON.parse(file);
             console.log("json file parsed.");
@@ -23,6 +25,8 @@ export class Parser {
             let keyValuePair = [];
             let value = items[key];
             keyValuePair.push(key);
+            console.log("value: ", value);
+            console.log("value length", value.length);
             if (typeof (value) === "object") {
                 if (value.length > 1) {
                     value = this.getJSONContent(value, true, false);

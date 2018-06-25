@@ -93,7 +93,7 @@ export class Visualizer {
         for (let item in content) {
             let subItems = content[item][1];
             let key = content[item][0]
-            console.log("key: ", key);
+            console.log("key type: ", typeof(key));
     
             if (typeof(subItems) === "object" && subItems.length > 1) {
                 let ul = document.createElement("ul");
@@ -143,7 +143,11 @@ export class Visualizer {
             }
     
             let li = document.createElement("li");
-            let value = document.createTextNode(key + ": " + subItems);
+            let value = document.createTextNode(key + ': "' + subItems + '"');
+            console.log(typeof(subItems));
+            if (typeof(subItems) === "number" || typeof(subItems) === "boolean") {
+                value = document.createTextNode(key + ': ' + subItems);
+            }
             li.appendChild(value);
     
             parentElement.appendChild(li);
