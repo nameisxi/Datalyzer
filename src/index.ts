@@ -10,6 +10,7 @@ TODO:
     -code editor that enables turning text to file
     -data validator
     -migrate to react
+    -add example file that fires on click of logo or something else
 */
 
 /**

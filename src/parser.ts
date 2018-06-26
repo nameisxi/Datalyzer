@@ -7,13 +7,9 @@ export class Parser {
         this.errorHandler = new ErrorHandler();
     }
 
-    parseJSONFile(file) {
-        console.log("parsing json file...");
-        console.log("withouth tag: ", file.innerText);
-        console.log("file: ", file);
+    parseJSONFile(rawFile) {
         try {
-            let jsonFileParsed = JSON.parse(file);
-            console.log("json file parsed.");
+            let jsonFileParsed = JSON.parse(rawFile);
             return jsonFileParsed;
         } catch (error) {
             this.errorHandler.fileParsingError();
@@ -24,7 +20,7 @@ export class Parser {
         return null;
     }
 
-    getJSONContent(items, recursion, returnKeyValuePair) {
+    /*getJSONContent(items, recursion, returnKeyValuePair) {
         let content = [];
         for (let key in items) {
             let keyValuePair = [];
@@ -72,5 +68,5 @@ export class Parser {
 
     getCSVContent() {
         return null;
-    }
+    }*/
 }

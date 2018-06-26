@@ -7,7 +7,7 @@ export class Visualizer {
         this.errorHandler = new ErrorHandler();
     }
 
-    visualizeJSONStructure(content) {
+    visualizeJSONStructure(file) {
         try {
             let div = document.createElement("div");
             div.setAttribute("id", "JSONStructure");
@@ -17,22 +17,41 @@ export class Visualizer {
             h3.appendChild(h3Value);
             div.appendChild(h3);
 
-            let ul = document.createElement("ul");
-            let valueUl = document.createElement("ul");
+            //let valueUl = document.createElement("ul");
             let valueDiv = document.createElement("div");
             valueDiv.setAttribute("id", "JSONStructureValue");
 
-            let visualizedJSON = this.drawJSONStructure(content[1], valueUl);
-            let li = document.createElement("li");
-            let liValue = document.createTextNode(content[0] + ": ");
+            //let visualizedJSON = this.drawJSONStructure(file, valueUl);
+            this.drawJSONStructure(file, valueDiv);
 
-            li.appendChild(liValue);
-            valueDiv.appendChild(li);
-            valueDiv.appendChild(visualizedJSON);
+            //valueDiv.appendChild(visualizedJSON);
             div.appendChild(valueDiv);
             document.getElementById("container").appendChild(div);
         } catch (error) {
             this.errorHandler.fileVisualizationError();
+        }
+    }
+
+    drawJSONStructure(data, parentContainer) {
+        if (typeof(data) == 'object') {
+            parentContainer.innerHTML = '<ul>';
+            //document.write('<ul>');
+            for (let key in data) {
+                let keyValue = '<li>' + key
+                //document.write(keyValue);
+                parentContainer.innerHTML = parentContainer.innerHTML.concat(keyValue);
+
+                this.drawJSONStructure(data[key], parentContainer);             
+            }
+            //document.write('</ul>');
+            parentContainer.innerHTML = parentContainer.innerHTML.concat('</ul>');
+        } else {
+            let value: string = ': "' + data + '"';
+            if (typeof(data) === "number") {
+                value = ': ' + typeof(data);
+            }
+            //document.write(value);
+            parentContainer.innerHTML = parentContainer.innerHTML.concat(value);
         }
     }
 
@@ -51,7 +70,7 @@ export class Visualizer {
             let valueDiv = document.createElement("div");
             valueDiv.setAttribute("id", "JSONFirstElementValue");
 
-            let visualizedJSON = this.drawFirstJSONElement(content[1], valueUl);
+            /*let visualizedJSON = this.drawFirstJSONElement(content[1], valueUl);
             let li = document.createElement("li");
             let liValue = document.createTextNode(content[0] + ": ");
 
@@ -59,9 +78,27 @@ export class Visualizer {
             valueDiv.appendChild(li);
             valueDiv.appendChild(visualizedJSON);
             div.appendChild(valueDiv);
-            document.getElementById("container").appendChild(div);
+            document.getElementById("container").appendChild(div);*/
         } catch (error) {
             this.errorHandler.fileVisualizationError();
+        }
+    }
+
+    drawFirstJSONElement(data) {
+        if (typeof(data) == 'object') {
+            document.write('<ul>');
+            for (let key in data) {
+                let keyValue = '<li>' + key
+                document.write(keyValue); 
+                this.visualizeFirstJSONElement(data[key]);            
+            }
+            document.write('</ul>');
+        } else {
+            let value: string = ': "' + data + '"';
+            if (typeof(data) === "number") {
+                value = ': ' + data;
+            }
+            document.write(value);
         }
     }
 
@@ -89,7 +126,7 @@ export class Visualizer {
         return null;
     }
 
-    drawJSONStructure(content, parentElement) {
+    /*drawJSONStructure(content, parentElement) {
         for (let item in content) {
             let subItems = content[item][1];
             let key = content[item][0]
@@ -159,5 +196,5 @@ export class Visualizer {
 
     drawFirstCSVElement() {
         return null;
-    }
+    }*/
 }
