@@ -30,6 +30,7 @@ label:hover {
 	position: relative;
 	overflow: hidden;
 	transition: .3s;
+	overflow-y:hidden;
 }
 
 .button:after {
@@ -55,7 +56,7 @@ label:hover {
 	left: 0;
 }
 
-.button:hover:nth-of-type(2) {
+.button:hover:nth-of-type(2), .button:hover:nth-of-type(3) {
 	color: #FFFFFF;
 }
 

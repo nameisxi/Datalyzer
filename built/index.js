@@ -10,6 +10,7 @@ TODO:
     -data validator
     -migrate to react
     -add example file that fires on click of logo or something else
+    -method to add id's for css and other features
 */
 /**
  * Analyzes the file that was uploaded through the input field.
@@ -22,8 +23,6 @@ class Main {
     }
     main() {
         this.clearPage();
-        console.log("taking file...");
-        //const file = <HTMLInputElement>document.getElementById("fileInputField").files[0];
         const inputField = document.getElementById("fileInputField");
         const files = inputField.files;
         const file = files[0];
@@ -44,7 +43,6 @@ class Main {
         }
     }
     clearPage() {
-        console.log("clearing page has started...");
         const container = document.getElementById("container");
         let errorDivs = document.getElementsByClassName("errorDiv");
         if (container) {
@@ -53,11 +51,9 @@ class Main {
         while (errorDivs[0]) {
             errorDivs[0].parentNode.removeChild(errorDivs[0]);
         }
-        console.log("page cleared.");
     }
 }
 document.getElementById("fileInputField").addEventListener("change", () => {
-    console.log("change detected: starting...");
     let main = new Main();
     main.main();
 });

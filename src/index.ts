@@ -11,6 +11,7 @@ TODO:
     -data validator
     -migrate to react
     -add example file that fires on click of logo or something else
+    -method to add id's for css and other features
 */
 
 /**
@@ -30,8 +31,6 @@ class Main {
     main(): void {
         this.clearPage();
 
-        console.log("taking file...");
-        //const file = <HTMLInputElement>document.getElementById("fileInputField").files[0];
         const inputField: HTMLInputElement = <HTMLInputElement>document.getElementById("fileInputField");
         const files: FileList = inputField.files;
         const file: File = files[0];
@@ -54,7 +53,6 @@ class Main {
     }
 
     clearPage(): void {
-        console.log("clearing page has started...");
         const container = document.getElementById("container");
         let errorDivs = document.getElementsByClassName("errorDiv");
 
@@ -65,12 +63,10 @@ class Main {
         while (errorDivs[0]) {
             errorDivs[0].parentNode.removeChild(errorDivs[0]);
         }
-        console.log("page cleared.");
     }
 }
 
 document.getElementById("fileInputField").addEventListener("change", () => {
-    console.log("change detected: starting...");
     let main = new Main();
     main.main();
 });
