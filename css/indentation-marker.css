@@ -1,0 +1,10 @@
+li {
+    font-family: 'Fira Mono', monospace;
+    list-style-type: none;
+    padding-left: 3px;
+}
+
+li:hover {
+    padding-left: 2.5px;
+    border-left: 0.5px dashed #000000;
+ }

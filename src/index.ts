@@ -4,7 +4,7 @@ import { Reader } from './reader.js';
 
 /*
 TODO:
-    -Get content full or first n elements
+    -Get content full [OR] first n elements
     -Additional information regarding single key value pairs etc. on click or hover
     -CSV support
     -code editor that enables turning text to file
@@ -12,6 +12,7 @@ TODO:
     -migrate to react
     -add example file that fires on click of logo or something else
     -method to add id's for css and other features
+    -fix container bottom border
 */
 
 /**
@@ -36,7 +37,6 @@ class Main {
         const file: File = files[0];
 
         const fileExtension = this.validator.getFileExtension(file);
-        console.log("extension: ", fileExtension);
         const dataIsValid = this.validator.checkDataValidity(file);
 
         if (dataIsValid) {

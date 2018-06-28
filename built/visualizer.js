@@ -10,9 +10,14 @@ export class Visualizer {
         // firstElementContainer holds file's first element's structure and first element.
         let firstElementContainer = document.createElement("div");
         firstElementContainer.setAttribute("id", "firstElementContainer");
+        // 
+        let fullFileButtonContainer = document.createElement("div");
+        fullFileButtonContainer.setAttribute("class", "button");
+        fullFileButtonContainer.setAttribute("id", "fullFileButtonContainer");
         let fullFileContainer = document.createElement("div");
         fullFileContainer.setAttribute("id", "fullFileContainer");
         container.appendChild(firstElementContainer);
+        container.appendChild(fullFileButtonContainer);
         container.appendChild(fullFileContainer);
         document.body.appendChild(container);
     }
@@ -32,7 +37,7 @@ export class Visualizer {
             let firstJSONElement = valueDiv.firstElementChild.firstElementChild;
             this.visualizeJSONStructure(file);
             this.visualizeFirstJSONElement(file, firstJSONElement);
-            this.createFullJSONViewerButton(div);
+            this.createFullFileButton(div);
         }
         catch (error) {
             this.errorHandler.fileVisualizationError();
@@ -121,25 +126,21 @@ export class Visualizer {
     visualizeWholeJSONFile() {
         return null;
     }
-    createFullJSONViewerButton(fullJSON) {
-        //<div class="button"><label for="fileInputField">Upload</label></div>
-        let div = document.createElement("div");
-        div.setAttribute("class", "button");
-        div.setAttribute("id", "fullFileButton");
-        div.addEventListener("click", () => {
+    createFullFileButton(fullJSON) {
+        let fullFileButton = document.getElementById("fullFileButtonContainer");
+        let label = document.createElement("label");
+        label.innerHTML = "Full file";
+        fullFileButton.appendChild(label);
+        fullFileButton.addEventListener("click", () => {
             if (document.getElementById("JSONElement") === null) {
                 document.getElementById("fullFileContainer").appendChild(fullJSON);
-                div.firstElementChild.innerHTML = "Hide full file";
+                fullFileButton.firstElementChild.innerHTML = "Hide file";
             }
             else {
                 document.getElementById("fullFileContainer").removeChild(fullJSON);
-                div.firstElementChild.innerHTML = "Full file";
+                fullFileButton.firstElementChild.innerHTML = "Full file";
             }
         });
-        let label = document.createElement("label");
-        label.innerHTML = "Full file";
-        div.appendChild(label);
-        document.getElementById("container").appendChild(div);
     }
     visualizeCSVStructure() {
         return null;
