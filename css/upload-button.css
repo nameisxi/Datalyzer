@@ -19,7 +19,7 @@ label:hover {
 	cursor: pointer;
 }
 
-.button {
+.button, .fileSearchControlsButtons {
 	flex: 1 1 auto;
 	margin-top: 0.1%;
 	margin-right: 5%;

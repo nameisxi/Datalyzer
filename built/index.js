@@ -11,7 +11,7 @@ TODO:
     -migrate to react
     -add example file that fires on click of logo or something else
     -method to add id's for css and other features
-    -fix container bottom border
+    -codepen search field and button
 */
 /**
  * Analyzes the file that was uploaded through the input field.
