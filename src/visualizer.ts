@@ -1,47 +1,36 @@
 import { ErrorHandler } from "./errorHandler.js";
+import { DomCreator } from "./domCreator.js";
 
 export class Visualizer {
+    domCreator: DomCreator;
     errorHandler: ErrorHandler;
     
     constructor() {
+        this.domCreator = new DomCreator();
         this.errorHandler = new ErrorHandler();
     }
 
     initializeContainers(): void {
-        // Container holds all the other parts created by JS in this application.
+        /* Container holds all the other parts created by JS in this application. */
         let container = document.createElement("div");
         container.setAttribute("id", "container");
 
+        
         // firstObjectContainer holds file's first object's structure and the first object itself.
         let firstObjectContainer = document.createElement("div");
         firstObjectContainer.setAttribute("id", "firstObjectContainer");
 
-        // Holds full file button which enables viewing uploaded file as a whole
-        let fullFileButtonContainer = document.createElement("div");
-        fullFileButtonContainer.setAttribute("class", "button");
-        fullFileButtonContainer.setAttribute("id", "fullFileButtonContainer");
 
-        // Holds the actual file that was uploaded in full
+        /* Holds everything related to full file view */
         let fullFileContainer = document.createElement("div");
         fullFileContainer.setAttribute("id", "fullFileContainer");
+
 
         /* Holds everything related to file search */
         let fileSearchContainer = document.createElement("div");
         fileSearchContainer.setAttribute("id", "fileSearchContainer");
-
-        // Holds controls for file search functions
-        let fileSearchControlsContainer = document.createElement("div");
-        fileSearchControlsContainer.setAttribute("id", "fileSearchControlsContainer");
-
-        // Holds results of file search
-        let fileSearchResultsContainer = document.createElement("div");
-        fileSearchResultsContainer.setAttribute("id", "fileSearchResultsContainer");
-
-        fileSearchContainer.appendChild(fileSearchControlsContainer);
-        fileSearchContainer.appendChild(fileSearchResultsContainer);
         
         container.appendChild(firstObjectContainer);
-        container.appendChild(fullFileButtonContainer);
         container.appendChild(fullFileContainer);
         container.appendChild(fileSearchContainer);
         document.body.appendChild(container);        
@@ -49,37 +38,25 @@ export class Visualizer {
 
     visualizeJSON(file): void {
         try {
-            let div = document.createElement("div");
-            div.setAttribute("id", "JSONFile");
-
-            let h3 = document.createElement("h3");
-            let h3Value = document.createTextNode("JSON file: ");
-            h3.appendChild(h3Value);
-            div.appendChild(h3);
-
-            let valueDiv = document.createElement("div");
-            valueDiv.setAttribute("id", "JSONFileValues");
-
             let innerHTMLString: string = this.drawJSONFile(file);
-            valueDiv.innerHTML = innerHTMLString;
+            let fullFileValues = document.createElement("div");
+            fullFileValues.setAttribute("id", "fullFileValues");
+            fullFileValues.innerHTML = innerHTMLString;
 
-            div.appendChild(valueDiv);
-
-            let objectList = valueDiv.firstElementChild.childNodes;
+            let objectList = fullFileValues.firstElementChild.childNodes;
             let firstJSONObject = objectList[0].cloneNode(true);
-
             let inputFieldLength = (file.length).toString().length;
+            let innerHTMLStringOfStructure = this.drawJSONStructure(file);
 
-            this.visualizeJSONStructure(file);
-            this.visualizeFirstJSONObject(file, firstJSONObject);
-            this.createFullFileButton(div);
-            this.createFileSearchControls(objectList, file.length, inputFieldLength);
+            this.domCreator.initializeFirstObjectContainer(file, innerHTMLStringOfStructure, firstJSONObject);
+            this.domCreator.initializeFullFileContainer(fullFileValues);
+            this.domCreator.initializeFileSearchContainer(objectList, inputFieldLength);
         } catch (error) {
             this.errorHandler.fileVisualizationError();
         }
     }
 
-    visualizeJSONStructure(file): void {
+    /*visualizeJSONStructure(file): void {
         try {
             let div = document.createElement("div");
             div.setAttribute("id", "JSONStructure");
@@ -123,7 +100,7 @@ export class Visualizer {
         } catch (error) {
             this.errorHandler.fileVisualizationError();
         }
-    }
+    }*/
 
     drawJSONStructure(data): string {
         let innerHTMLString: string = "";
@@ -166,15 +143,7 @@ export class Visualizer {
         return innerHTMLString;
     }
 
-    visualizeNthJSONElement() {
-        return null;
-    }
-
-    visualizeWholeJSONFile() {
-        return null;
-    }
-
-    createFullFileButton(fullJSON: HTMLElement): void {
+    /*createFullFileButton(fullJSON: HTMLElement): void {
         let fullFileButton = document.getElementById("fullFileButtonContainer");
         let label = document.createElement("label");
         label.innerHTML = "Full file";
@@ -189,17 +158,17 @@ export class Visualizer {
                 fullFileButton.firstElementChild.innerHTML = "Full file";
             }
         });
-    }
+    }*/
 
-    createFileSearchControls(objectList, numberOfObjects, inputFieldLength): void {
+    /*createFileSearchControls(objectList, numberOfObjects, inputFieldLength): void {
         let stringSearchContainer = this.createStringSearch();
         let nthObjectSearchContainer = this.createNthObjectSearch(objectList, numberOfObjects, inputFieldLength);
 
         document.getElementById("fileSearchControlsContainer").appendChild(stringSearchContainer);
         document.getElementById("fileSearchControlsContainer").appendChild(nthObjectSearchContainer);
-    }
+    }*/
 
-    createStringSearch() {
+    /*createStringSearch() {
         let stringSearchContainer = document.createElement("div");
 
         let searchParameterField = document.createElement("input");
@@ -219,10 +188,29 @@ export class Visualizer {
         stringSearchContainer.appendChild(stringSearchButton);
 
         return stringSearchContainer;
-    }
+    }*/
 
-    createNthObjectSearch(objectList, numberOfObjects, inputFieldLength) {
-        let nthObjectSearchContainer = document.createElement("div");
+    /*createNthObjectSearch(objectList, numberOfObjects, inputFieldLength) {
+        /*let div = document.createElement("div");
+        div.setAttribute("id", "JSONFile");
+
+        let h3 = document.createElement("h3");
+        let h3Value = document.createTextNode("JSON file: ");
+        h3.appendChild(h3Value);
+        div.appendChild(h3);
+
+        let valueDiv = document.createElement("div");
+        valueDiv.setAttribute("id", "JSONFileValues");
+
+        let innerHTMLString: string = this.drawJSONFile(file);
+        valueDiv.innerHTML = innerHTMLString;
+
+        div.appendChild(valueDiv)*/
+
+
+
+
+        /*let nthObjectSearchContainer = document.createElement("div");
 
         let nthObjectSearchField = document.createElement("input");
         nthObjectSearchField.setAttribute("id", "nthObjectSearchField");
@@ -261,26 +249,18 @@ export class Visualizer {
         nthObjectSearchContainer.appendChild(nthObjectSearchButton);
 
         return nthObjectSearchContainer;
-    }
+}*/
 
-    createNthObjectSearchButtonEventListener(numberOfObjects) {
-        let nthObjectSearchButton = document.getElementById("nthObjectSearchButton");
 
-    }
-
-    visualizeCSVStructure() {
+    visualizeCSV() {
         return null;
     }
 
-    visualizeFirstCSVElement() {
+    drawCSVStructure() {
         return null;
     }
 
-    visualizeNthCSVElement() {
-        return null;
-    }
-
-    visualizeWholeCSVFile() {
+    drawFirstCSVRow() {
         return null;
     }
 }
