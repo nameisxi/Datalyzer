@@ -12,24 +12,28 @@ export class Visualizer {
         let container = document.createElement("div");
         container.setAttribute("id", "container");
 
-        // firstObjectContainer holds file's first element's structure and first element.
+        // firstObjectContainer holds file's first object's structure and the first object itself.
         let firstObjectContainer = document.createElement("div");
         firstObjectContainer.setAttribute("id", "firstObjectContainer");
 
-        // 
+        // Holds full file button which enables viewing uploaded file as a whole
         let fullFileButtonContainer = document.createElement("div");
         fullFileButtonContainer.setAttribute("class", "button");
         fullFileButtonContainer.setAttribute("id", "fullFileButtonContainer");
 
+        // Holds the actual file that was uploaded in full
         let fullFileContainer = document.createElement("div");
         fullFileContainer.setAttribute("id", "fullFileContainer");
 
+        /* Holds everything related to file search */
         let fileSearchContainer = document.createElement("div");
         fileSearchContainer.setAttribute("id", "fileSearchContainer");
 
+        // Holds controls for file search functions
         let fileSearchControlsContainer = document.createElement("div");
         fileSearchControlsContainer.setAttribute("id", "fileSearchControlsContainer");
 
+        // Holds results of file search
         let fileSearchResultsContainer = document.createElement("div");
         fileSearchResultsContainer.setAttribute("id", "fileSearchResultsContainer");
 
@@ -46,7 +50,7 @@ export class Visualizer {
     visualizeJSON(file): void {
         try {
             let div = document.createElement("div");
-            div.setAttribute("id", "JSONObject");
+            div.setAttribute("id", "JSONFile");
 
             let h3 = document.createElement("h3");
             let h3Value = document.createTextNode("JSON file: ");
@@ -54,9 +58,9 @@ export class Visualizer {
             div.appendChild(h3);
 
             let valueDiv = document.createElement("div");
-            valueDiv.setAttribute("id", "JSONObjectValue");
+            valueDiv.setAttribute("id", "JSONFileValues");
 
-            let innerHTMLString: string = this.drawJSONObject(file);
+            let innerHTMLString: string = this.drawJSONFile(file);
             valueDiv.innerHTML = innerHTMLString;
 
             div.appendChild(valueDiv);
@@ -141,14 +145,14 @@ export class Visualizer {
         return innerHTMLString;
     }
 
-    drawJSONObject(data): string {
+    drawJSONFile(data): string {
         let innerHTMLString: string = "";
         if (typeof(data) == "object") {
             innerHTMLString += "<ul>";
 
             for (let key in data) {
                 innerHTMLString += "<li>" + key;
-                innerHTMLString += this.drawJSONObject(data[key]);             
+                innerHTMLString += this.drawJSONFile(data[key]);             
             }
             innerHTMLString += "</ul>";
         } else {
@@ -177,7 +181,7 @@ export class Visualizer {
         fullFileButton.appendChild(label);
 
         fullFileButton.addEventListener("click", () => {
-            if (document.getElementById("JSONObject") === null) {
+            if (document.getElementById("JSONFile") === null) {
                 document.getElementById("fullFileContainer").appendChild(fullJSON);
                 fullFileButton.firstElementChild.innerHTML = "Hide file";
             } else {

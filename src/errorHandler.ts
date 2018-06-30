@@ -3,6 +3,11 @@
  */
 export class ErrorHandler {
     dataIsNotValid() {
+        let container = document.getElementById("container");
+        if (container) {
+            document.body.removeChild(container);
+        }
+
         let div = document.createElement("div");
         div.setAttribute("class", "errorDiv");
 
@@ -15,6 +20,11 @@ export class ErrorHandler {
     }
 
     fileReadingError() {
+        let container = document.getElementById("container");
+        if (container) {
+            document.body.removeChild(container);
+        }
+
         let div = document.createElement("div");
         div.setAttribute("class", "errorDiv");
 
@@ -28,6 +38,11 @@ export class ErrorHandler {
     }
 
     fileParsingError() {
+        let container = document.getElementById("container");
+        if (container) {
+            document.body.removeChild(container);
+        }
+
         let div = document.createElement("div");
         div.setAttribute("class", "errorDiv");
 
@@ -40,22 +55,16 @@ export class ErrorHandler {
     }
 
     fileVisualizationError() {
+        let container = document.getElementById("container");
+        if (container) {
+            document.body.removeChild(container);
+        }
+
         let div = document.createElement("div");
         div.setAttribute("class", "errorDiv");
 
         let errorMessage = document.createElement("fileVisualizationError");
         errorMessage.textContent = "Content visualization was unsuccessful due to an error";
-
-        div.appendChild(errorMessage);
-        div.appendChild(document.createElement("br"));
-        document.body.appendChild(div);
-    }
-
-    testi() {
-        let div = document.createElement("div");
-
-        let errorMessage = document.createElement("testi");
-        errorMessage.textContent = "TOIMIIIIII";
 
         div.appendChild(errorMessage);
         div.appendChild(document.createElement("br"));

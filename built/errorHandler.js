@@ -3,6 +3,10 @@
  */
 export class ErrorHandler {
     dataIsNotValid() {
+        let container = document.getElementById("container");
+        if (container) {
+            document.body.removeChild(container);
+        }
         let div = document.createElement("div");
         div.setAttribute("class", "errorDiv");
         let errorMessage = document.createElement("dataValidationError");
@@ -12,6 +16,10 @@ export class ErrorHandler {
         document.body.appendChild(div);
     }
     fileReadingError() {
+        let container = document.getElementById("container");
+        if (container) {
+            document.body.removeChild(container);
+        }
         let div = document.createElement("div");
         div.setAttribute("class", "errorDiv");
         let errorMessage = document.createElement("fileReadingError");
@@ -21,6 +29,10 @@ export class ErrorHandler {
         return div;
     }
     fileParsingError() {
+        let container = document.getElementById("container");
+        if (container) {
+            document.body.removeChild(container);
+        }
         let div = document.createElement("div");
         div.setAttribute("class", "errorDiv");
         let errorMessage = document.createElement("fileParsingError");
@@ -30,18 +42,14 @@ export class ErrorHandler {
         document.body.appendChild(div);
     }
     fileVisualizationError() {
+        let container = document.getElementById("container");
+        if (container) {
+            document.body.removeChild(container);
+        }
         let div = document.createElement("div");
         div.setAttribute("class", "errorDiv");
         let errorMessage = document.createElement("fileVisualizationError");
         errorMessage.textContent = "Content visualization was unsuccessful due to an error";
-        div.appendChild(errorMessage);
-        div.appendChild(document.createElement("br"));
-        document.body.appendChild(div);
-    }
-    testi() {
-        let div = document.createElement("div");
-        let errorMessage = document.createElement("testi");
-        errorMessage.textContent = "TOIMIIIIII";
         div.appendChild(errorMessage);
         div.appendChild(document.createElement("br"));
         document.body.appendChild(div);

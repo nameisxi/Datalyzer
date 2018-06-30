@@ -3,7 +3,6 @@ import { Validator } from './validator.js';
 import { Reader } from './reader.js';
 /*
 TODO:
-    -Get content full [OR] first n elements
     -Additional information regarding single key value pairs etc. on click or hover
     -CSV support
     -code editor that enables turning text to file
