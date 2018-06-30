@@ -62,11 +62,14 @@ export class Visualizer {
             div.appendChild(valueDiv);
 
             let objectList = valueDiv.firstElementChild.childNodes;
-            let firstJSONObject = objectList[0];
+            let firstJSONObject = objectList[0].cloneNode(true);
+
+            let inputFieldLength = (file.length).toString().length;
+
             this.visualizeJSONStructure(file);
             this.visualizeFirstJSONObject(file, firstJSONObject);
             this.createFullFileButton(div);
-            this.createFileSearchControls(objectList, (objectList.length).toString().length);
+            this.createFileSearchControls(objectList, file.length, inputFieldLength);
         } catch (error) {
             this.errorHandler.fileVisualizationError();
         }
@@ -184,9 +187,9 @@ export class Visualizer {
         });
     }
 
-    createFileSearchControls(objectList, numberOfObjects): void {
+    createFileSearchControls(objectList, numberOfObjects, inputFieldLength): void {
         let stringSearchContainer = this.createStringSearch();
-        let nthObjectSearchContainer = this.createNthObjectSearch(objectList, numberOfObjects);
+        let nthObjectSearchContainer = this.createNthObjectSearch(objectList, numberOfObjects, inputFieldLength);
 
         document.getElementById("fileSearchControlsContainer").appendChild(stringSearchContainer);
         document.getElementById("fileSearchControlsContainer").appendChild(nthObjectSearchContainer);
@@ -214,35 +217,39 @@ export class Visualizer {
         return stringSearchContainer;
     }
 
-    createNthObjectSearch(objectList, numberOfObjects) {
+    createNthObjectSearch(objectList, numberOfObjects, inputFieldLength) {
         let nthObjectSearchContainer = document.createElement("div");
 
         let nthObjectSearchField = document.createElement("input");
         nthObjectSearchField.setAttribute("id", "nthObjectSearchField");
         nthObjectSearchField.setAttribute("type", "text");
         nthObjectSearchField.setAttribute("placeholder", "Nth");
-        nthObjectSearchField.setAttribute("size", numberOfObjects.toString());
+        nthObjectSearchField.setAttribute("size", inputFieldLength.toString());
 
         let nthObjectSearchButton = document.createElement("div");
         nthObjectSearchButton.setAttribute("class", "fileSearchControlsButtons");
         nthObjectSearchButton.setAttribute("id", "nthObjectSearchButton");
 
+        nthObjectSearchButton.addEventListener("click", () => {
+            let previousResultsContainer = document.getElementById("fileSearchResultsContainer");
+            previousResultsContainer.innerHTML = "";
+
+            let inputElement: HTMLInputElement = <HTMLInputElement>document.getElementById("nthObjectSearchField");
+            let inputValue = Number.parseInt(inputElement.value) - 1;
+
+            if (!isNaN(inputValue) && inputValue < numberOfObjects) {
+                let nthObject = objectList[inputValue].cloneNode(true);
+                document.getElementById("fileSearchResultsContainer").appendChild(nthObject);
+            } else if (isNaN(inputValue)) {
+                console.log("not valid value");
+            } else {
+                console.log("Last object of the file is ", numberOfObjects);
+            }
+        });        
+
         let label = document.createElement("label");
         label.innerHTML = "Search";
         nthObjectSearchButton.appendChild(label);
-
-        nthObjectSearchButton.addEventListener("click", () => {
-            let inputElement: HTMLInputElement = <HTMLInputElement>document.getElementById("nthObjectSearchField");
-            let inputValue = inputElement.value;
-            console.log(inputValue);
-            console.log(Number.parseInt(inputValue));
-
-            //if (!isNaN(inputValue) && inputValue < objectList.length) {
-                //console.log("toimii2");
-                //let nthObject = objectList[inputValue];
-              //  document.getElementById("fileSearchResultsContainer").appendChild(nthObject);
-            //}
-        });
 
         nthObjectSearchContainer.appendChild(document.createTextNode("Get the "));
         nthObjectSearchContainer.appendChild(nthObjectSearchField);
@@ -250,6 +257,11 @@ export class Visualizer {
         nthObjectSearchContainer.appendChild(nthObjectSearchButton);
 
         return nthObjectSearchContainer;
+    }
+
+    createNthObjectSearchButtonEventListener(numberOfObjects) {
+        let nthObjectSearchButton = document.getElementById("nthObjectSearchButton");
+
     }
 
     visualizeCSVStructure() {

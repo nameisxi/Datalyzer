@@ -12,6 +12,7 @@ TODO:
     -add example file that fires on click of logo or something else
     -method to add id's for css and other features
     -codepen search field and button
+    -export search results
 */
 /**
  * Analyzes the file that was uploaded through the input field.
