@@ -19,11 +19,9 @@ label:hover {
 	cursor: pointer;
 }
 
-.button, .fileSearchControlsButtons {
+.button {
 	flex: 1 1 auto;
 	margin-top: 0.1%;
-	margin-right: 5%;
-	margin-left: 5%;
 	border: 1px solid #000000;
 	text-align: center;
 	text-transform: uppercase;
@@ -56,7 +54,7 @@ label:hover {
 	left: 0;
 }
 
-.button:hover:nth-of-type(2), .button:hover:nth-of-type(3) {
+.button:hover:nth-of-type(1), .button:hover:nth-of-type(2), .button:hover:nth-of-type(3), .button:hover:nth-of-type(4) {
 	color: #FFFFFF;
 }
 

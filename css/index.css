@@ -5,6 +5,64 @@
     margin-right: 5%;
 }
 
+#container {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+*:focus {
+    outline: none;
+}
+
+#stringSearchContainer {
+    display: flex;
+    margin-bottom: 5%;
+}
+
+#stringSearchControlsContainer {
+    float: right;
+    margin-left: 2%;
+    margin-right: 0;
+    width: 33%;
+}
+
+#stringSearchResultsContainer {
+    width: 65%;
+    float: left;
+}
+
+#nthObjectSearchContainer {
+    display: flex;
+    margin-bottom: 5%;
+}
+
+#nthObjectSearchFieldContainer, #stringSearchFieldContainer {
+    display: flex;
+    flex: 1;
+}
+
+#stringSearchField, #nthObjectSearchField {
+    flex: 1 1 auto;
+    border: 1px solid #000000;
+    border-bottom: 0;
+    border-radius: 0;
+    color: #000000;
+	font-family: 'Lato', sans-serif;
+	font-weight: 300;
+    text-align: center;
+}
+
+#nthObjectSearchControlsContainer {
+    float: left;
+    margin-right: 2%;
+    width: 33%;
+}
+
+#nthObjectSearchResultsContainer {
+    float: right;
+}
+
+
 /*Headers*/
 h1 {
     margin-top: 5%;
@@ -42,25 +100,23 @@ h3 {
 
 #firstObjectContainer, #fullFileContainer {
     overflow: auto;
-    margin-right: 5%;
-    margin-left: 5%;
     margin-bottom: 5%;
     border-bottom: 1px solid #000000;
 }
 
-#JSONStructure {
+#JSONFileStructureContainer {
     float: left; 
     height: 100%;
     width: 49%;
 }
 
-#firstJSONObject {
+#firstJSONObjectContainer {
     float: right; 
     height: 100%;
     width: 49%;
 }
 
-#JSONStructureValue, #firstJSONFileValues {
+#JSONFileStructureValueContainer, #firstJSONObjectValueContainer {
     height: 100%;
     background-color: #FFFFFF;
     margin-bottom: 0;
@@ -70,9 +126,12 @@ h3 {
     padding-bottom: 0;
 }
 
-#fullFileButton {
+#fullFileButtonContainer {
     overflow: hidden;
     text-align: center;
+    margin-left: 0;
+    margin-right: 0;
+    /*width: 100% !important;*/
 }
 
 /*Error elements*/

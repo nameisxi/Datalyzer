@@ -12,6 +12,8 @@ TODO:
     -method to add id's for css and other features
     -codepen search field and button
     -export search results
+    -hide button into the end of the searc results
+    -"open in new tab" for results?
 */
 /**
  * Analyzes the file that was uploaded through the input field.

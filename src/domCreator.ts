@@ -9,8 +9,8 @@ export class DomCreator {
         let jsonFileStructureContainer = this.initializeJSONFileStructureContainer(file, innerHTMLStringOfStructure);
         let firstJSONObjectContainer = this.initializeFirstJSONObjectContainer(file, firstJSONObject);
 
-        firstJSONObjectContainer.appendChild(jsonFileStructureContainer);
-        firstJSONObjectContainer.appendChild(firstJSONObjectContainer);
+        firstObjectContainer.appendChild(jsonFileStructureContainer);
+        firstObjectContainer.appendChild(firstJSONObjectContainer);
     }
 
     initializeJSONFileStructureContainer(file, innerHTMLStringOfStructure) {
@@ -59,111 +59,182 @@ export class DomCreator {
         let h3Value = document.createTextNode("JSON file: ");
         h3.appendChild(h3Value);
         fullFileValueContainer.appendChild(h3);
-
         fullFileValueContainer.appendChild(fullFileValues);
 
         // Full file button container
         let fullFileButtonContainer = document.createElement("div");
         fullFileButtonContainer.setAttribute("id", "fullFileButtonContainer");
+        fullFileButtonContainer.setAttribute("class", "button");
         let label = document.createElement("label");
         label.innerHTML = "Full file";
         fullFileButtonContainer.appendChild(label);
 
         fullFileButtonContainer.addEventListener("click", () => {
-            if (document.getElementById("fullFileValues") === null) {
-                document.getElementById("fullFileValueContainer").appendChild(fullFileValues);
+            if (document.getElementById("fullFileValueContainer") === null) {
+                document.getElementById("fullFileContainer").appendChild(fullFileValueContainer);
                 fullFileButtonContainer.firstElementChild.innerHTML = "Hide file";
             } else {
-                document.getElementById("fullFileValueContainer").removeChild(fullFileValues);
+                document.getElementById("fullFileContainer").removeChild(fullFileValueContainer);
                 fullFileButtonContainer.firstElementChild.innerHTML = "Full file";
             }
         });
+
+        document.getElementById("fullFileContainer").appendChild(fullFileButtonContainer);
     }
 
     initializeFileSearchContainer(objectList, inputFieldLength) {
         let fileSearchContainer = document.getElementById("fileSearchContainer");
 
-        let stringSearchContainer = this.initializeStringSearchContainer();
+        let stringSearchContainer = this.initializeStringSearchContainer(objectList);
         let nthObjectSearchContainer = this.initializeNthObjectSearchContainer(objectList, inputFieldLength);
 
         fileSearchContainer.appendChild(stringSearchContainer);
         fileSearchContainer.appendChild(nthObjectSearchContainer);
     }
 
-    initializeStringSearchContainer() {
+    initializeStringSearchContainer(objectList) {
         let stringSearchContainer = document.createElement("div");
         stringSearchContainer.setAttribute("id", "stringSearchContainer");
 
-        let stringSearchFieldContainer = this.initializeStringSearchFieldContainer();
-        let searchButtonContainer = this.initializeStringSearchButtonContainer();
-        let searchResultContainer = this.initializeSearchResultContainer();
+        let stringSearchControlsContainer = document.createElement("div");
+        stringSearchControlsContainer.setAttribute("id", "stringSearchControlsContainer");
 
-        stringSearchContainer.appendChild(stringSearchFieldContainer);
-        stringSearchContainer.appendChild(searchButtonContainer);
+        let stringSearchFieldContainer = this.initializeStringSearchFieldContainer(objectList);
+        stringSearchControlsContainer.appendChild(stringSearchFieldContainer);
+        let searchButtonContainer = this.initializeStringSearchButtonContainer(objectList);
+        stringSearchControlsContainer.appendChild(searchButtonContainer);
+
+        let searchResultContainer = this.initializeStringSearchResultsContainer();
+
         stringSearchContainer.appendChild(searchResultContainer);
+        stringSearchContainer.appendChild(stringSearchControlsContainer);
 
         return stringSearchContainer;
     }
 
-    initializeStringSearchFieldContainer() {
+    initializeStringSearchFieldContainer(objectList) {
         let stringSearchFieldContainer = document.createElement("div");
         stringSearchFieldContainer.setAttribute("id", "stringSearchFieldContainer");
 
         let searchField = document.createElement("input");
-        searchField.setAttribute("id", "searchParameterField");
+        searchField.setAttribute("id", "stringSearchField");
         searchField.setAttribute("type", "text");
-        searchField.setAttribute("placeholder", "Rows that include...");
+        searchField.setAttribute("placeholder", "Objects that contain...");
+
+        searchField.addEventListener("keypress", (event) => {
+            if (event.key == "Enter") {
+                event.preventDefault();
+                let oldResultsContainer = document.getElementById("stringSearchResultsContainer");
+                oldResultsContainer.innerHTML = "";
+
+                let inputElement: HTMLInputElement = <HTMLInputElement>document.getElementById("stringSearchField");
+                let inputValue = inputElement.value.trim().toLowerCase();
+
+                for (let object of objectList) {
+                    if (inputValue != null && object.innerHTML.includes(inputValue)) {
+                        document.getElementById("stringSearchResultsContainer").appendChild(object);
+                        document.getElementById("stringSearchResultsContainer").appendChild(document.createElement("br"));
+                    }
+                }
+            }
+        });
         stringSearchFieldContainer.appendChild(searchField);
 
         return stringSearchFieldContainer;
     }
 
-    initializeStringSearchButtonContainer() {
+    initializeStringSearchButtonContainer(objectList) {
         let searchButtonContainer = document.createElement("div");
         searchButtonContainer.setAttribute("id", "searchButtonContainer");
 
         let searchButton = document.createElement("div");
         searchButtonContainer.setAttribute("class", "button");
-        searchButtonContainer.setAttribute("id", "searchButton");
+        searchButtonContainer.setAttribute("id", "stringSearchButton");
 
         let label = document.createElement("label");
         label.innerHTML = "Search";
         searchButton.appendChild(label);
 
         searchButton.addEventListener("click", () => {
-            let oldResultsContainer = document.getElementById("searchResultsContainer");
+            console.log("toimii 1");
+            let oldResultsContainer = document.getElementById("stringSearchResultsContainer");
             oldResultsContainer.innerHTML = "";
+
+            let inputElement: HTMLInputElement = <HTMLInputElement>document.getElementById("stringSearchField");
+            let inputValue = inputElement.value.trim().toLowerCase();
+
+            for (let object of objectList) {
+                if (inputValue != null && object.innerHTML.includes(inputValue)) {
+                    document.getElementById("stringSearchResultsContainer").appendChild(object);
+                    document.getElementById("stringSearchResultsContainer").appendChild(document.createElement("br"));
+                }
+            }
         }); 
         searchButtonContainer.appendChild(searchButton);
 
         return searchButtonContainer;
     }
 
+    initializeStringSearchResultsContainer() {
+        let stringSearchResultsContainer = document.createElement("div");
+        stringSearchResultsContainer.setAttribute("id", "stringSearchResultsContainer");
+
+        return stringSearchResultsContainer;
+    }
+
     initializeNthObjectSearchContainer(objectList, inputFieldLength) {
         let nthObjectSearchContainer = document.createElement("div");
         nthObjectSearchContainer.setAttribute("id", "nthObjectSearchContainer");
 
-        let nthObjectSearchFieldContainer = this.initializeNthObjectSearchFieldContainer(inputFieldLength);
-        let searchButtonContainer = this.initializeNthObjectSearchButtonContainer(objectList);
-        let searchResultContainer = this.initializeSearchResultContainer();
+        let nthObjectSearchControlsContainer = document.createElement("div");
+        nthObjectSearchControlsContainer.setAttribute("id", "nthObjectSearchControlsContainer");
 
-        nthObjectSearchContainer.appendChild(nthObjectSearchFieldContainer);
-        nthObjectSearchContainer.appendChild(searchButtonContainer);
-        nthObjectSearchContainer.appendChild(searchResultContainer);
+        let nthObjectSearchFieldContainer = this.initializeNthObjectSearchFieldContainer(objectList, inputFieldLength);
+        nthObjectSearchControlsContainer.appendChild(nthObjectSearchFieldContainer);
+        let searchButtonContainer = this.initializeNthObjectSearchButtonContainer(objectList);
+        nthObjectSearchControlsContainer.appendChild(searchButtonContainer);
+
+        let searchResultsContainer = this.initializeNthObjectSearchResultsContainer();
+
+        nthObjectSearchContainer.appendChild(nthObjectSearchControlsContainer);
+        nthObjectSearchContainer.appendChild(searchResultsContainer);
 
         return nthObjectSearchContainer;
     }
 
-    initializeNthObjectSearchFieldContainer(inputFieldLength) {
+    initializeNthObjectSearchFieldContainer(objectList, inputFieldLength) {
         let nthObjectSearchFieldContainer = document.createElement("div");
         nthObjectSearchFieldContainer.setAttribute("id", "nthObjectSearchFieldContainer");
 
         let nthObjectSearchField = document.createElement("input");
         nthObjectSearchField.setAttribute("id", "nthObjectSearchField");
         nthObjectSearchField.setAttribute("type", "text");
-        nthObjectSearchField.setAttribute("placeholder", "Nth");
+        nthObjectSearchField.setAttribute("placeholder", "Nth Object");
         nthObjectSearchField.setAttribute("size", inputFieldLength.toString());
         nthObjectSearchFieldContainer.appendChild(nthObjectSearchField);
+
+        nthObjectSearchField.addEventListener('keypress', (event) => {
+            if (event.key == "Enter") {
+                event.preventDefault();
+
+                let oldResultsContainer = document.getElementById("nthObjectSearchResultsContainer");
+                oldResultsContainer.innerHTML = "";
+
+                let inputValue = Number.parseInt(nthObjectSearchField.value) - 1;
+                let numberOfObjects = objectList.length;
+    
+                if (!isNaN(inputValue) && inputValue < numberOfObjects) {
+                    let nthObject = objectList[inputValue].cloneNode(true);
+                    document.getElementById("nthObjectSearchResultsContainer").appendChild(nthObject);
+                    document.getElementById("nthObjectSearchResultsContainer").scrollIntoView();
+                    window.scrollBy(0, -70);
+                } else if (isNaN(inputValue)) {
+                    console.log("not valid value");
+                } else {
+                    console.log("Last object of the file is ", numberOfObjects);
+                }
+            }
+        });
 
         return nthObjectSearchFieldContainer;
     }
@@ -174,14 +245,14 @@ export class DomCreator {
 
         let searchButton = document.createElement("div");
         searchButtonContainer.setAttribute("class", "button");
-        searchButtonContainer.setAttribute("id", "searchButton");
+        searchButtonContainer.setAttribute("id", "nthObjectSearchButton");
 
         let label = document.createElement("label");
         label.innerHTML = "Search";
         searchButton.appendChild(label);
 
         searchButton.addEventListener("click", () => {
-            let oldResultsContainer = document.getElementById("searchResultsContainer");
+            let oldResultsContainer = document.getElementById("nthObjectSearchResultsContainer");
             oldResultsContainer.innerHTML = "";
 
             let inputElement: HTMLInputElement = <HTMLInputElement>document.getElementById("nthObjectSearchField");
@@ -190,7 +261,9 @@ export class DomCreator {
 
             if (!isNaN(inputValue) && inputValue < numberOfObjects) {
                 let nthObject = objectList[inputValue].cloneNode(true);
-                document.getElementById("searchResultsContainer").appendChild(nthObject);
+                document.getElementById("nthObjectSearchResultsContainer").appendChild(nthObject);
+                document.getElementById("nthObjectSearchResultsContainer").scrollIntoView();
+                window.scrollBy(0, -70);
             } else if (isNaN(inputValue)) {
                 console.log("not valid value");
             } else {
@@ -202,7 +275,10 @@ export class DomCreator {
         return searchButtonContainer;
     }
 
-    initializeSearchResultContainer() {
-        return null;
+    initializeNthObjectSearchResultsContainer() {
+        let nthObjectSearchResultsContainer = document.createElement("div");
+        nthObjectSearchResultsContainer.setAttribute("id", "nthObjectSearchResultsContainer");
+
+        return nthObjectSearchResultsContainer;
     }
 }
