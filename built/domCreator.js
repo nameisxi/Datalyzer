@@ -103,6 +103,8 @@ export class DomCreator {
                     if (inputValue != null && object.innerHTML.includes(inputValue)) {
                         document.getElementById("stringSearchResultsContainer").appendChild(object);
                         document.getElementById("stringSearchResultsContainer").appendChild(document.createElement("br"));
+                        document.getElementById("stringSearchResultsContainer").appendChild(document.createElement("br"));
+                        document.getElementById("stringSearchResultsContainer").appendChild(document.createElement("br"));
                     }
                 }
             }

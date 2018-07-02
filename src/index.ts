@@ -14,7 +14,7 @@ TODO:
     -codepen search field and button
     -export search results
     -hide button into the end of the searc results
-    -"open in new tab" for results?
+    -string search -> to int search
 */
 
 /**
