@@ -1,16 +1,19 @@
 import { Parser } from "./parser.js";
-import { Visualizer } from "./visualizer.js";
+import { JSONVisualizer } from "./jsonVisualizer.js";
+import { CSVVisualizer } from "./csvVisualizer.js";
 export class Analyzer {
     constructor() {
         this.parser = new Parser();
-        this.visualizer = new Visualizer();
+        this.jsonVisualizer = new JSONVisualizer();
+        this.csvVisualizer = new CSVVisualizer();
     }
     analyzeJSONFile(rawFile) {
         let file = this.parser.parseJSONFile(rawFile);
-        this.visualizer.initializeContainers();
-        let jsonElement = this.visualizer.visualizeJSON(file);
+        this.jsonVisualizer.initializeContainers();
+        this.jsonVisualizer.visualizeJSON(file);
     }
     analyzeCSVFile(file) {
-        return null;
+        this.csvVisualizer.initializeContainers();
+        this.csvVisualizer.visualizeCSV(file);
     }
 }

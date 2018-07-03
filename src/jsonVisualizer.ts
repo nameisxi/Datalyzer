@@ -1,12 +1,12 @@
 import { ErrorHandler } from "./errorHandler.js";
-import { DomCreator } from "./domCreator.js";
+import { JSONDomCreator } from "./jsonDomCreator.js";
 
-export class Visualizer {
-    domCreator: DomCreator;
+export class JSONVisualizer {
+    domCreator: JSONDomCreator;
     errorHandler: ErrorHandler;
     
     constructor() {
-        this.domCreator = new DomCreator();
+        this.domCreator = new JSONDomCreator();
         this.errorHandler = new ErrorHandler();
     }
 
@@ -35,37 +35,30 @@ export class Visualizer {
 
     visualizeJSON(file): void {
         try {
-            console.log("visualizeJSOn toimii");
-            let innerHTMLString: string = this.drawJSONFile(file);
-            console.log("drawjsonfile toimii");
+            let innerHTMLString: string = this.jsonFileToHTML(file);
             let fullFileValues = document.createElement("div");
             fullFileValues.setAttribute("id", "fullFileValues");
             fullFileValues.innerHTML = innerHTMLString;
 
             let objectList = fullFileValues.firstElementChild.childNodes;
             let firstJSONObject = objectList[0].cloneNode(true);
-            let inputFieldLength = (file.length).toString().length;
-            let innerHTMLStringOfStructure = this.drawJSONStructure(file);
-            console.log("drawjsonstructure toimii");
+            let innerHTMLStringOfStructure = this.jsonStructureToHTML(file);
 
             this.domCreator.initializeFirstObjectContainer(file, innerHTMLStringOfStructure, firstJSONObject);
-            console.log("initializefirstobjetcontainer toimii");
             this.domCreator.initializeFullFileContainer(fullFileValues);
-            console.log("initializefullfilecontainer toimii");
-            this.domCreator.initializeFileSearchContainer(objectList, inputFieldLength);
-            console.log("intitializefilesearchcontainer toimii");
+            this.domCreator.initializeFileSearchContainer(objectList);
         } catch (error) {
             this.errorHandler.fileVisualizationError();
         }
     }
 
-    drawJSONStructure(data): string {
+    jsonStructureToHTML(data): string {
         let innerHTMLString: string = "";
         if (typeof(data) == "object") {
             innerHTMLString += "<ul>";
             for (let key in data) {
                 innerHTMLString += "<li>" + key;
-                innerHTMLString += this.drawJSONStructure(data[key]);            
+                innerHTMLString += this.jsonStructureToHTML(data[key]);            
             }
             innerHTMLString += "</ul>";
         } else {
@@ -79,14 +72,14 @@ export class Visualizer {
         return innerHTMLString;
     }
 
-    drawJSONFile(data): string {
+    jsonFileToHTML(data): string {
         let innerHTMLString: string = "";
         if (typeof(data) == "object") {
             innerHTMLString += "<ul>";
 
             for (let key in data) {
                 innerHTMLString += "<li>" + key;
-                innerHTMLString += this.drawJSONFile(data[key]);             
+                innerHTMLString += this.jsonFileToHTML(data[key]);             
             }
             innerHTMLString += "</ul>";
         } else {
@@ -98,17 +91,5 @@ export class Visualizer {
         }
 
         return innerHTMLString;
-    }
-
-    visualizeCSV() {
-        return null;
-    }
-
-    drawCSVStructure() {
-        return null;
-    }
-
-    drawFirstCSVRow() {
-        return null;
     }
 }

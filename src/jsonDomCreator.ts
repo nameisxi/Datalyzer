@@ -1,4 +1,4 @@
-export class DomCreator {
+export class JSONDomCreator {
     constructor() {
 
     }
@@ -82,11 +82,11 @@ export class DomCreator {
         document.getElementById("fullFileContainer").appendChild(fullFileButtonContainer);
     }
 
-    initializeFileSearchContainer(objectList, inputFieldLength) {
+    initializeFileSearchContainer(objectList) {
         let fileSearchContainer = document.getElementById("fileSearchContainer");
 
         let stringSearchContainer = this.initializeStringSearchContainer(objectList);
-        let nthObjectSearchContainer = this.initializeNthObjectSearchContainer(objectList, inputFieldLength);
+        let nthObjectSearchContainer = this.initializeNthObjectSearchContainer(objectList);
 
         fileSearchContainer.appendChild(stringSearchContainer);
         fileSearchContainer.appendChild(nthObjectSearchContainer);
@@ -132,11 +132,17 @@ export class DomCreator {
 
                 for (let object of objectList) {
                     if (inputValue != null && object.innerHTML.includes(inputValue)) {
-                        document.getElementById("stringSearchResultsContainer").appendChild(object);
+                        document.getElementById("stringSearchResultsContainer").appendChild(object.cloneNode(true));
                         document.getElementById("stringSearchResultsContainer").appendChild(document.createElement("br"));
                         document.getElementById("stringSearchResultsContainer").appendChild(document.createElement("br"));
                         document.getElementById("stringSearchResultsContainer").appendChild(document.createElement("br"));
                     }
+                }
+
+                if (!document.getElementById("stringSearchResultsContainer").hasChildNodes()) {
+                    let notFoundElement = document.createElement("li");
+                    notFoundElement.innerHTML = "No results";
+                    document.getElementById("stringSearchResultsContainer").appendChild(notFoundElement);
                 }
             }
         });
@@ -167,9 +173,17 @@ export class DomCreator {
 
             for (let object of objectList) {
                 if (inputValue != null && object.innerHTML.includes(inputValue)) {
-                    document.getElementById("stringSearchResultsContainer").appendChild(object);
+                    document.getElementById("stringSearchResultsContainer").appendChild(object.cloneNode(true));
+                    document.getElementById("stringSearchResultsContainer").appendChild(document.createElement("br"));
+                    document.getElementById("stringSearchResultsContainer").appendChild(document.createElement("br"));
                     document.getElementById("stringSearchResultsContainer").appendChild(document.createElement("br"));
                 }
+            }
+
+            if (!document.getElementById("stringSearchResultsContainer").hasChildNodes()) {
+                let notFoundElement = document.createElement("li");
+                notFoundElement.innerHTML = "No results";
+                document.getElementById("stringSearchResultsContainer").appendChild(notFoundElement);
             }
         }); 
         searchButtonContainer.appendChild(searchButton);
@@ -184,14 +198,14 @@ export class DomCreator {
         return stringSearchResultsContainer;
     }
 
-    initializeNthObjectSearchContainer(objectList, inputFieldLength) {
+    initializeNthObjectSearchContainer(objectList) {
         let nthObjectSearchContainer = document.createElement("div");
         nthObjectSearchContainer.setAttribute("id", "nthObjectSearchContainer");
 
         let nthObjectSearchControlsContainer = document.createElement("div");
         nthObjectSearchControlsContainer.setAttribute("id", "nthObjectSearchControlsContainer");
 
-        let nthObjectSearchFieldContainer = this.initializeNthObjectSearchFieldContainer(objectList, inputFieldLength);
+        let nthObjectSearchFieldContainer = this.initializeNthObjectSearchFieldContainer(objectList);
         nthObjectSearchControlsContainer.appendChild(nthObjectSearchFieldContainer);
         let searchButtonContainer = this.initializeNthObjectSearchButtonContainer(objectList);
         nthObjectSearchControlsContainer.appendChild(searchButtonContainer);
@@ -204,7 +218,7 @@ export class DomCreator {
         return nthObjectSearchContainer;
     }
 
-    initializeNthObjectSearchFieldContainer(objectList, inputFieldLength) {
+    initializeNthObjectSearchFieldContainer(objectList) {
         let nthObjectSearchFieldContainer = document.createElement("div");
         nthObjectSearchFieldContainer.setAttribute("id", "nthObjectSearchFieldContainer");
 
@@ -212,7 +226,6 @@ export class DomCreator {
         nthObjectSearchField.setAttribute("id", "nthObjectSearchField");
         nthObjectSearchField.setAttribute("type", "text");
         nthObjectSearchField.setAttribute("placeholder", "Nth Object");
-        nthObjectSearchField.setAttribute("size", inputFieldLength.toString());
         nthObjectSearchFieldContainer.appendChild(nthObjectSearchField);
 
         nthObjectSearchField.addEventListener('keypress', (event) => {
@@ -225,15 +238,19 @@ export class DomCreator {
                 let inputValue = Number.parseInt(nthObjectSearchField.value) - 1;
                 let numberOfObjects = objectList.length;
     
-                if (!isNaN(inputValue) && inputValue < numberOfObjects) {
+                if (!isNaN(inputValue) && inputValue < numberOfObjects && inputValue > 0) {
                     let nthObject = objectList[inputValue].cloneNode(true);
                     document.getElementById("nthObjectSearchResultsContainer").appendChild(nthObject);
                     document.getElementById("nthObjectSearchResultsContainer").scrollIntoView();
                     window.scrollBy(0, -70);
                 } else if (isNaN(inputValue)) {
-                    console.log("not valid value");
+                    let valueNotValid = document.createElement("li");
+                    valueNotValid.innerHTML = "Not a valid value";
+                    document.getElementById("stringSearchResultsContainer").appendChild(valueNotValid);
                 } else {
-                    console.log("Last object of the file is ", numberOfObjects);
+                    let valueNotValid = document.createElement("li");
+                valueNotValid.innerHTML = "Last object of the file is ", numberOfObjects;
+                document.getElementById("stringSearchResultsContainer").appendChild(valueNotValid);
                 }
             }
         });
@@ -261,15 +278,19 @@ export class DomCreator {
             let inputValue = Number.parseInt(inputElement.value) - 1;
             let numberOfObjects = objectList.length;
 
-            if (!isNaN(inputValue) && inputValue < numberOfObjects) {
+            if (!isNaN(inputValue) && inputValue < numberOfObjects && inputValue > 0) {
                 let nthObject = objectList[inputValue].cloneNode(true);
                 document.getElementById("nthObjectSearchResultsContainer").appendChild(nthObject);
                 document.getElementById("nthObjectSearchResultsContainer").scrollIntoView();
                 window.scrollBy(0, -70);
             } else if (isNaN(inputValue)) {
-                console.log("not valid value");
+                let valueNotValid = document.createElement("li");
+                valueNotValid.innerHTML = "Not a valid value";
+                document.getElementById("stringSearchResultsContainer").appendChild(valueNotValid);
             } else {
-                console.log("Last object of the file is ", numberOfObjects);
+                let valueNotValid = document.createElement("li");
+                valueNotValid.innerHTML = "Last object of the file is ", numberOfObjects;
+                document.getElementById("stringSearchResultsContainer").appendChild(valueNotValid);
             }
         }); 
         searchButtonContainer.appendChild(searchButton);

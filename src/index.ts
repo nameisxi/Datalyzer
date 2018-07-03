@@ -4,14 +4,11 @@ import { Reader } from './reader.js';
 
 /*
 TODO:
-    -Additional information regarding single key value pairs etc. on click or hover
-    -CSV support
+    -CSV row number indicator and horizontal scroll fix
     -code editor that enables turning text to file
     -data validator
     -migrate to react
     -add example file that fires on click of logo or something else
-    -method to add id's for css and other features
-    -codepen search field and button
     -export search results
     -hide button into the end of the searc results
     -string search -> to int search

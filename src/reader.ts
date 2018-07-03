@@ -16,7 +16,6 @@ export class Reader {
     }
 
     readJSONFile(file) {
-        console.log("JSON reading started...");
         let jsonFile = null;
 
         let promise = new Promise((resolve, reject) => {
@@ -35,6 +34,20 @@ export class Reader {
     }
 
     readCSVFile(file) {
-        return null;
+        let csvFile = null;
+
+        let promise = new Promise((resolve, reject) => {
+            this.reader.readAsText(file, "UTF-8");
+            this.reader.onload = (event) => {
+                csvFile = event.target.result.split("\n");
+                resolve(csvFile);
+            }
+    
+            this.reader.onerror = (event) => {
+                reject(this.errorHandler.fileReadingError());
+            }
+        });
+
+        promise.then((csvFile) => this.analyzer.analyzeCSVFile(csvFile));
     }
 }

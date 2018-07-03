@@ -31,17 +31,17 @@
     float: left;
 }
 
-#nthObjectSearchContainer {
+#nthObjectSearchContainer, #nthRowSearchContainer {
     display: flex;
     margin-bottom: 5%;
 }
 
-#nthObjectSearchFieldContainer, #stringSearchFieldContainer {
+#nthObjectSearchFieldContainer, #stringSearchFieldContainer, #nthRowSearchFieldContainer {
     display: flex;
     flex: 1;
 }
 
-#stringSearchField, #nthObjectSearchField {
+#stringSearchField, #nthObjectSearchField, #nthRowSearchField {
     flex: 1 1 auto;
     border: 1px solid #000000;
     border-bottom: 0;
@@ -52,13 +52,13 @@
     text-align: center;
 }
 
-#nthObjectSearchControlsContainer {
+#nthObjectSearchControlsContainer, #nthRowSearchControlsContainer {
     float: left;
     margin-right: 2%;
     width: 33%;
 }
 
-#nthObjectSearchResultsContainer {
+#nthObjectSearchResultsContainer, #nthRowSearchResultsContainer {
     float: right;
 }
 
@@ -98,25 +98,25 @@ h3 {
     background-color: #000000;
 }
 
-#firstObjectContainer, #fullFileContainer {
+#firstObjectContainer, #fullFileContainer, #firstRowsContainer {
     overflow: auto;
     margin-bottom: 5%;
     border-bottom: 1px solid #000000;
 }
 
-#JSONFileStructureContainer {
+#JSONFileStructureContainer, #CSVFileStructureContainer {
     float: left; 
     height: 100%;
     width: 49%;
 }
 
-#firstJSONObjectContainer {
+#firstJSONObjectContainer, #firstCSVRowsContainer {
     float: right; 
     height: 100%;
     width: 49%;
 }
 
-#JSONFileStructureValueContainer, #firstJSONObjectValueContainer {
+#JSONFileStructureValueContainer, #firstJSONObjectValueContainer, #CSVFileStructureValueContainer, #firstCSVRowsValueContainer {
     height: 100%;
     background-color: #FFFFFF;
     margin-bottom: 0;
