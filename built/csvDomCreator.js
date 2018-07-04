@@ -104,7 +104,7 @@ export class CSVDomCreator {
                 let inputElement = document.getElementById("stringSearchField");
                 let inputValue = inputElement.value.trim().toLowerCase();
                 for (let row of rowList) {
-                    if (inputValue != null && row.innerHTML.includes(inputValue)) {
+                    if (inputValue != null && inputValue != "" && row.innerHTML.includes(inputValue)) {
                         document.getElementById("stringSearchResultsContainer").appendChild(row.cloneNode(true));
                         document.getElementById("stringSearchResultsContainer").appendChild(document.createElement("br"));
                         document.getElementById("stringSearchResultsContainer").appendChild(document.createElement("br"));
@@ -136,7 +136,7 @@ export class CSVDomCreator {
             let inputElement = document.getElementById("stringSearchField");
             let inputValue = inputElement.value.trim().toLowerCase();
             for (let row of rowList) {
-                if (inputValue != null && row.innerHTML.includes(inputValue)) {
+                if (inputValue != null && inputValue != "" && row.innerHTML.includes(inputValue)) {
                     document.getElementById("stringSearchResultsContainer").appendChild(row.cloneNode(true));
                     document.getElementById("stringSearchResultsContainer").appendChild(document.createElement("br"));
                     document.getElementById("stringSearchResultsContainer").appendChild(document.createElement("br"));
@@ -195,12 +195,12 @@ export class CSVDomCreator {
                 else if (isNaN(inputValue)) {
                     let valueNotValid = document.createElement("li");
                     valueNotValid.innerHTML = "Not a valid value";
-                    document.getElementById("stringSearchResultsContainer").appendChild(valueNotValid);
+                    document.getElementById("nthRowSearchResultsContainer").appendChild(valueNotValid);
                 }
                 else {
                     let valueNotValid = document.createElement("li");
-                    valueNotValid.innerHTML = "Last row of the file is ", numberOfRows;
-                    document.getElementById("stringSearchResultsContainer").appendChild(valueNotValid);
+                    valueNotValid.innerHTML = "Last row of the file is " + numberOfRows;
+                    document.getElementById("nthRowSearchResultsContainer").appendChild(valueNotValid);
                 }
             }
         });
@@ -230,12 +230,12 @@ export class CSVDomCreator {
             else if (isNaN(inputValue)) {
                 let valueNotValid = document.createElement("li");
                 valueNotValid.innerHTML = "Not a valid value";
-                document.getElementById("stringSearchResultsContainer").appendChild(valueNotValid);
+                document.getElementById("nthRowSearchResultsContainer").appendChild(valueNotValid);
             }
             else {
                 let valueNotValid = document.createElement("li");
-                valueNotValid.innerHTML = "Last row of the file is ", numberOfRows;
-                document.getElementById("stringSearchResultsContainer").appendChild(valueNotValid);
+                valueNotValid.innerHTML = "Last row of the file is " + numberOfRows;
+                document.getElementById("nthRowSearchResultsContainer").appendChild(valueNotValid);
             }
         });
         searchButtonContainer.appendChild(searchButton);

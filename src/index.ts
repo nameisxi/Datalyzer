@@ -12,6 +12,10 @@ TODO:
     -export search results
     -hide button into the end of the searc results
     -string search -> to int search
+    -added search result info like the number of hits etc.
+    -JSON nth object error message infinite fix
+    -added info on the file (length, columns etc.)
+    -debug champions json file error
 */
 
 /**

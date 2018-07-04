@@ -131,7 +131,7 @@ export class JSONDomCreator {
                 let inputValue = inputElement.value.trim().toLowerCase();
 
                 for (let object of objectList) {
-                    if (inputValue != null && object.innerHTML.includes(inputValue)) {
+                    if (inputValue != null && inputValue != "" && object.innerHTML.includes(inputValue)) {
                         document.getElementById("stringSearchResultsContainer").appendChild(object.cloneNode(true));
                         document.getElementById("stringSearchResultsContainer").appendChild(document.createElement("br"));
                         document.getElementById("stringSearchResultsContainer").appendChild(document.createElement("br"));
@@ -164,7 +164,6 @@ export class JSONDomCreator {
         searchButton.appendChild(label);
 
         searchButton.addEventListener("click", () => {
-            console.log("toimii 1");
             let oldResultsContainer = document.getElementById("stringSearchResultsContainer");
             oldResultsContainer.innerHTML = "";
 
@@ -172,7 +171,7 @@ export class JSONDomCreator {
             let inputValue = inputElement.value.trim().toLowerCase();
 
             for (let object of objectList) {
-                if (inputValue != null && object.innerHTML.includes(inputValue)) {
+                if (inputValue != null && inputValue != "" && object.innerHTML.includes(inputValue)) {
                     document.getElementById("stringSearchResultsContainer").appendChild(object.cloneNode(true));
                     document.getElementById("stringSearchResultsContainer").appendChild(document.createElement("br"));
                     document.getElementById("stringSearchResultsContainer").appendChild(document.createElement("br"));
@@ -246,11 +245,12 @@ export class JSONDomCreator {
                 } else if (isNaN(inputValue)) {
                     let valueNotValid = document.createElement("li");
                     valueNotValid.innerHTML = "Not a valid value";
-                    document.getElementById("stringSearchResultsContainer").appendChild(valueNotValid);
+                    document.getElementById("nthObjectSearchResultsContainer").appendChild(valueNotValid);
                 } else {
                     let valueNotValid = document.createElement("li");
-                valueNotValid.innerHTML = "Last object of the file is ", numberOfObjects;
-                document.getElementById("stringSearchResultsContainer").appendChild(valueNotValid);
+                valueNotValid.innerHTML = "Last object of the file is " + numberOfObjects;
+                console.log("nmb: ", numberOfObjects);
+                document.getElementById("nthObjectSearchResultsContainer").appendChild(valueNotValid);
                 }
             }
         });
@@ -286,11 +286,11 @@ export class JSONDomCreator {
             } else if (isNaN(inputValue)) {
                 let valueNotValid = document.createElement("li");
                 valueNotValid.innerHTML = "Not a valid value";
-                document.getElementById("stringSearchResultsContainer").appendChild(valueNotValid);
+                document.getElementById("nthObjectSearchResultsContainer").appendChild(valueNotValid);
             } else {
                 let valueNotValid = document.createElement("li");
-                valueNotValid.innerHTML = "Last object of the file is ", numberOfObjects;
-                document.getElementById("stringSearchResultsContainer").appendChild(valueNotValid);
+                valueNotValid.innerHTML = "Last object of the file is " + numberOfObjects;
+                document.getElementById("nthObjectSearchResultsContainer").appendChild(valueNotValid);
             }
         }); 
         searchButtonContainer.appendChild(searchButton);
